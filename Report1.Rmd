@@ -1,0 +1,59 @@
+---
+title: "Lab Report by Gavin Burger & James Bunt"
+subtitle: "Descriptive & Inferential Analysis of a Jungian Sandplay VR Project"
+author: "Gavin Burger & James Bunt"
+date: "`r format(Sys.time(),'%a,%d %B %y at %X')`"
+fontsize: "10pt"
+  output:
+  html_document:
+    toc: true
+    toc_title: "Table of Contents"
+    toc_float: true
+    toc_depth: 2
+    fig_caption: false
+    lof: true
+    number_sections true
+    code_folding: hide
+    theme: paper
+---
+#Load & Inspect Data
+
+## Load Data
+
+```{r Load Data, echo=TRUE}
+file_name = "./data/daie_ca3_data_13.csv"
+study_data <- read.csv(file_name)
+```
+
+## Inspect Data Structure
+```{r Inspect Head, Tail & Structure, echo=TRUE}
+# show structure
+str(study_data)
+
+#show first N
+#head(study_data, 10)
+#show last N
+#tail(study_data, 5)
+
+# show a prettier paged table
+rmarkdown::paged_table(study_data)
+
+# show a prettier page table but only first 8 rows
+head_study_data < head(study_data, 8)
+rmarkdown::paged_table(head_study_data)
+
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
