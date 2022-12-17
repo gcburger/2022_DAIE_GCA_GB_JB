@@ -30,6 +30,8 @@ file_name = "./data/daie_ca3_data_13.csv"
 study_data <- read.csv(file_name)
 ```
 
+## Clean Data
+
 # install.packages("tidyverse")
 library(tidyverse)
 view(study_data)
@@ -40,17 +42,43 @@ unique(study_data)
 unique(study_data$gender)
 unique(study_data$test_group)
 
-# filter variables
+# Filter variables (this does not work for some reason)
 study_data %>%
   select(gender, test_group, ends_with("cpss")) %>%
   filter(gender %in% c("Male, "Female") & test_group %in% c("Static", "Animated", "Control") & post_trial_cpss < 10) %>%
 
-# change variable to factor variable 
+# Change variables to factor variable 
 study_data$gender <- as.factor(study_data$gender)
 study_data$test_group <- as.factor(study_data$test_group)
 
-# Missing data
+# Identify missing data (we have 1 instance of missing data in test group)
+mean(study_data$pre_trial_cpss, na.rm = TRUE)
+mean(study_data$post_trial_cpss, na.rm = TRUE)
 
+# Removing lines with missing data (does not identify the 1 line with missing data, unsure why yet)
+study_data %>%
+  select(gender, test_group, pre_trial_cpss, post_trial_cpss) %>%
+  filter(complete.cases(.)) %>%
+  drop_na(test_group) 
+  
+# Confirming no duplicates (no dupes)
+study_data %>% distinct()
+
+## Wrangle data (1 row with missing data and 2 rows with bad data)
+
+# Select variables to work with including adding variance column, then filter and arrange data (not removing >12 range yet)
+
+  names(study_data)
+  
+  study_data %>%
+    select(gender, test_group, pre_trial_cpss, post_trial_cpss) %>%
+    filter(
+      (gender == "Male") | (gender == "Female") &
+      (test_group == "Animated") | (test_group == "Static") | (test_group == "Control") &
+      pre_trial_cpss > 0.00 &
+      post_trial_cpss < 10.00) %>%
+    mutate(impact = post_trial_cpss - pre_trial_cpss) %>%
+    arrange(-impact)
 
 ## Inspect Data Structure
 ```{r Inspect Head, Tail & Structure, echo=TRUE}
@@ -75,24 +103,6 @@ knitr::kable(study_data,
              
 ## Mean, Median & Summary
 
-```{r Mean & Median, echo=TRUE}
-shoe_size_mean <- mean(study_data$show_size_eu)
-shoe_size_std <- sd(student_data$show_size_eu)
-age <- 40
-```
-
-The value of age is `r age`
-
-We can access variables from inside code chunks by wrapping the variable in a *mini-chunk* of R as shown on the next line.
-
-Median shoe size statistics were generated (M =`r round(shoe_size_mean, 2)`, SD = `r round(shoe_size_std, 2)`). 
-
-It can be useful to create a summary of the data for quick analysis. A summary of the data is shown below:
-
-```{r Summary, echo=TRUE}
-summary(student_data)
-#boxplot(student_data$height_cm~student_data$gender)
-```
 
 
 
