@@ -2870,7 +2870,7 @@ border-radius: 0px;
 <h1 class="title toc-ignore">Descriptive &amp; Inferential Analysis of a
 Jungian Sandplay VR Project</h1>
 <h4 class="author">Gavin Burger &amp; James Bunt</h4>
-<h4 class="date">Sat, 17 December 22 at 22:52:32</h4>
+<h4 class="date">Mon, 19 December 22 at 20:42:27</h4>
 
 </div>
 
@@ -2906,7 +2906,8 @@ c(“Static”, “Animated”, “Control”) &amp; post_trial_cpss &lt; 10)
 factor variable</h1>
 <p>study_data<span class="math inline">\(gender &lt;-
 as.factor(study_data\)</span>gender) study_data<span class="math inline">\(test_group &lt;-
-as.factor(study_data\)</span>test_group)</p>
+as.factor(study_data\)</span>test_group) study_data<span class="math inline">\(impact &lt;-
+as.dbl(study_data\)</span>test_group)</p>
 </div>
 <div id="identify-missing-data-we-have-1-instance-of-missing-data-in-test-group" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Identify missing data
@@ -2939,11 +2940,24 @@ work with including adding variance column, then filter and arrange data
 <p>study_data %&gt;% select(gender, test_group, pre_trial_cpss,
 post_trial_cpss) %&gt;% filter( (gender == “Male”) | (gender ==
 “Female”) &amp; (test_group == “Animated”) | (test_group == “Static”) |
-(test_group == “Control”) &amp; pre_trial_cpss &gt; 0.00 &amp;
-post_trial_cpss &lt; 10.00) %&gt;% mutate(impact = post_trial_cpss -
-pre_trial_cpss) %&gt;% arrange(-impact)</p>
-<div id="inspect-data-structure" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Inspect Data
+(test_group == “Control”) &amp; (pre_trial_cpss &gt; 0) &amp;
+(post_trial_cpss &lt; 10)) %&gt;% mutate(impact_cpss = post_trial_cpss -
+pre_trial_cpss) %&gt;% arrange(-impact_cpss) %&gt;% View</p>
+<pre><code>mean(study_data$impact_cpss)
+mean(study_data$impact_cpss[study_data$test_group==&quot;Control&quot;])
+mean(study_data$impact_cpss[study_data$test_group==&quot;Static&quot;])</code></pre>
+<div id="hypothesis-testing" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Hypothesis
+testing</h2>
+<pre><code>boxplot(test_group ~ impact)
+# Ho: mean impact of control group &lt; those who completed therapy
+# two sided test
+# assume non-equal variances
+
+t.test(impact~)</code></pre>
+</div>
+<div id="inspect-data-structure" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Inspect Data
 Structure</h2>
 <pre class="r"><code># show structure
 str(study_data)</code></pre>
@@ -4389,8 +4403,8 @@ knitr::kable(study_data,
 </tbody>
 </table>
 </div>
-<div id="mean-median-summary" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Mean, Median &amp;
+<div id="mean-median-summary" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Mean, Median &amp;
 Summary</h2>
 </div>
 </div>

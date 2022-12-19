@@ -50,6 +50,7 @@ study_data %>%
 # Change variables to factor variable 
 study_data$gender <- as.factor(study_data$gender)
 study_data$test_group <- as.factor(study_data$test_group)
+study_data$impact <- as.dbl(study_data$test_group)
 
 # Identify missing data (we have 1 instance of missing data in test group)
 mean(study_data$pre_trial_cpss, na.rm = TRUE)
@@ -75,10 +76,25 @@ study_data %>% distinct()
     filter(
       (gender == "Male") | (gender == "Female") &
       (test_group == "Animated") | (test_group == "Static") | (test_group == "Control") &
-      pre_trial_cpss > 0.00 &
-      post_trial_cpss < 10.00) %>%
-    mutate(impact = post_trial_cpss - pre_trial_cpss) %>%
-    arrange(-impact)
+      (pre_trial_cpss > 0) &
+      (post_trial_cpss < 10)) %>%
+    mutate(impact_cpss = post_trial_cpss - pre_trial_cpss) %>%
+    arrange(-impact_cpss) %>%
+    View
+    
+    mean(study_data$impact_cpss)
+    mean(study_data$impact_cpss[study_data$test_group=="Control"])
+    mean(study_data$impact_cpss[study_data$test_group=="Static"])
+    
+## Hypothesis testing
+    
+    boxplot(test_group ~ impact)
+    # Ho: mean impact of control group < those who completed therapy
+    # two sided test
+    # assume non-equal variances
+    
+    t.test(impact~)
+
 
 ## Inspect Data Structure
 ```{r Inspect Head, Tail & Structure, echo=TRUE}
