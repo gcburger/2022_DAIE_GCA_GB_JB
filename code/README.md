@@ -19,6 +19,10 @@ When you save the notebook, an HTML file containing the code and output will be 
 
 The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
 
+
+
+## James's Notes
+
 There are a few important factors that should be considered when conducting the experiment described above.
 
 First, it is important to ensure that the study is conducted in a controlled and standardized manner. This means that the sample of patients should be selected using a random sampling method, and the groups should be of equal size to avoid any potential bias.
