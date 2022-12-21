@@ -1,0 +1,124 @@
+---
+title: "Descriptive & Inferential Analysis of a Jungian Sandplay VR Project"
+author: "Gavin Burger & James Bunt"
+date: "`r format(Sys.time(), '%a, %d %B %y at %X')`"
+fontsize: "10pt"
+output: 
+  html_document:
+    toc: true
+    toc_title: "Table Of Contents"
+    toc_float: true
+    toc_depth: 2
+    fig_caption: false
+    lof: true
+    number_sections: true
+    code_folding: hide
+    theme: paper
+---
+
+```{r setup and library load, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+cat('\014')
+```
+
+#Load & Inspect Data
+
+## Load Data
+
+```{r Load Data, echo=TRUE}
+file_name = "./data/daie_ca3_data_13.csv"
+study_data <- read.csv(file_name)
+```
+
+## Clean Data
+
+# install.packages("tidyverse")
+library(tidyverse)
+view(study_data)
+
+# variable types
+glimpse(study_data)
+unique(study_data)
+unique(study_data$gender)
+unique(study_data$test_group)
+
+# Filter variables (this does not work for some reason)
+study_data %>%
+  select(gender, test_group, ends_with("cpss")) %>%
+  filter(gender %in% c("Male, "Female") & test_group %in% c("Static", "Animated", "Control") & post_trial_cpss < 10) %>%
+
+# Change variables to factor variable 
+study_data$gender <- as.factor(study_data$gender)
+study_data$test_group <- as.factor(study_data$test_group)
+study_data$impact <- as.dbl(study_data$test_group)
+
+# Identify missing data (we have 1 instance of missing data in test group)
+mean(study_data$pre_trial_cpss, na.rm = TRUE)
+mean(study_data$post_trial_cpss, na.rm = TRUE)
+
+# Removing lines with missing data (does not identify the 1 line with missing data, unsure why yet)
+study_data %>%
+  select(gender, test_group, pre_trial_cpss, post_trial_cpss) %>%
+  filter(complete.cases(.)) %>%
+  drop_na(test_group) 
+  
+# Confirming no duplicates (no dupes)
+study_data %>% distinct()
+
+## Wrangle data (1 row with missing data and 2 rows with bad data)
+
+# Select variables to work with including adding variance column, then filter and arrange data (not removing >12 range yet)
+
+  names(study_data)
+  
+  study_data %>%
+    select(gender, test_group, pre_trial_cpss, post_trial_cpss) %>%
+    filter(
+      (gender == "Male") | (gender == "Female") &
+      (test_group == "Animated") | (test_group == "Static") | (test_group == "Control") &
+      (pre_trial_cpss > 0) &
+      (post_trial_cpss < 10)) %>%
+    mutate(impact_cpss = post_trial_cpss - pre_trial_cpss) %>%
+    arrange(-impact_cpss) %>%
+    View
+    
+    mean(study_data$impact_cpss)
+    mean(study_data$impact_cpss[study_data$test_group=="Control"])
+    mean(study_data$impact_cpss[study_data$test_group=="Static"])
+    
+## Hypothesis testing
+    
+    boxplot(test_group ~ impact)
+    # Ho: mean impact of control group < those who completed therapy
+    # two sided test
+    # assume non-equal variances
+    
+    t.test(impact~)
+
+
+## Inspect Data Structure
+```{r Inspect Head, Tail & Structure, echo=TRUE}
+# show structure
+str(study_data)
+# show first N
+head(study_data, 10)
+# show last N
+tail(study_data, 5)
+# show a "prettier" paged table
+rmarkdown::paged_table(study_data)
+# show a "prettier" paged table but ONLY first 8 rows
+head_study_data <- head(study_data, 8)
+rmarkdown::paged_table(head_study_data)
+# show a "prettier" paged table using kable() with caption and decimal digit max length and alignment = centre
+knitr::kable(study_data,
+  align = c('c'), # a vector with 'c', 'l', or 'r' values
+  digits = 2,
+  caption = "Source data table")
+```
+
+             
+## Mean, Median & Summary
+
+
+
+
