@@ -61,13 +61,52 @@ cat('\014')
 
 ## Procedure
 
-### Clean Data
-
 ### Load Data
 ```{r Load Data, echo=TRUE}
 # load data from csv
 file_name = "./data/daie_ca3_data_13.csv"
 study_data <- read.csv(file_name)
+```
+
+### Clean Data
+```{r}
+# install.packages("tidyverse")
+
+# load and attach tidyverse package
+library(tidyverse)
+
+View(study_data)
+
+# variable types
+glimpse(study_data)
+class(study_data$post_trial_cpss)
+
+# find distinct data values for columns
+unique(study_data$gender) # incorrect spelling of value "mal", should be "Male"
+unique(study_data$test_group) # value of "" is present, means missing data
+
+# select variables (selects all valid data - see count is 147 row i.e. 3 rows have invalid/misisng data)
+study_data %>%
+  select(gender, test_group, ends_with("cpss")) %>%
+  filter(gender %in% c("Male", "Female") 
+         & test_group %in% c("Static", "Control", "Animated") 
+         & post_trial_cpss < 10)
+
+# identify missing data
+#mean(study_data$pre_trial_cpss, na.rm = TRUE) # remove not available observations from pre_trial_cpss variable
+mean(study_data$pre_trial_cpss) #6.0618
+mean(study_data$post_trial_cpss) #5.4154
+mean(study_data$pre_trial_or) #6.072133
+mean(study_data$post_trial_or) #5.3748
+# all means were able to be calculated, thus there's no missing data in those columns
+
+# filter observations of variables that have missing values (does not identify the 1 line with missing data, unsure why yet)
+study_data %>%
+  select(gender, test_group, pre_trial_cpss, post_trial_cpss, pre_trial_or, post_trial_or) %>%
+  filter(!complete.cases(.)) # complete.cases not picking up row 42 '' test_group
+
+# check for duplicates (no dupes)
+study_data %>% distinct() # 150 rows returned, so no duplicates
 ```
 
 ### Inspect Data Structure
