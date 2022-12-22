@@ -28,23 +28,40 @@ knitr::opts_chunk$set(echo = TRUE)
 cat('\014')
 ```
 
-
 # Abstract
 *NB to be succinct and clear here*
 
 ## Aim and rationale
 
-
-
 ## Participants and setting
-
-
 
 ## Experiment design
 
-
-
 ## Results gathering
+
+## Major findings
+
+## Findings/implications
+
+
+# Introduction
+
+## Topic and context
+
+## Rationale
+
+## Hypothesis
+
+
+# Method
+
+## Participants
+
+## Design
+
+## Materials
+
+## Procedure
 
 ### Load Data
 ```{r Load Data, echo=TRUE}
@@ -64,7 +81,7 @@ head(study_data, 10)
 # show last N
 tail(study_data, 10)
 
-# show a paged table with all the data
+# show a paged table containing all the data
 rmarkdown::paged_table(study_data)
 ```
 
@@ -96,77 +113,25 @@ A summary of the data is shown below:
 
 ```{r Summary, echo=TRUE}
 summary(study_data)
-#boxplot(student_data$height_cm~student_data$gender)
 ```
-
-
-
-## Major findings
-
-
-
-## Findings/implications
-
-
-
-# Introduction
-
-## Topic and context
-
-
-
-## Rationale
-
-
-
-## Hypothesis
-
-
-
-# Method
-
-## Participants
-
-
-
-## Design
-
-
-
-## Materials
-
-
-
-## Procedure
-
 
 
 # Results
 
 ## Descriptive statistics
 
-
-
 ## Inferential statistics
-
-
 
 ## Statistical tests
 
-
-
 ## Magnitude and direction of results
-
 
 
 # Discussion
 
 ## Outline findings and relation to the hypothesis
 
-
-
 ## Limitations (if confounding variables are clearly identified by your group)
-
 
 
 # References
