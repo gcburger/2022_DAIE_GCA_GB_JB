@@ -9,11 +9,11 @@ output:
     toc: true
     toc_title: "Table Of Contents"
     toc_float: true
-    toc_depth: 2
+    toc_depth: 3
     fig_caption: false
     lof: true
     number_sections: true
-    code_folding: show
+    code_folding: hide
     theme: paper
 ---
 
@@ -45,6 +45,59 @@ cat('\014')
 
 
 ## Results gathering
+
+### Load Data
+```{r Load Data, echo=TRUE}
+# load data from csv
+file_name = "./data/daie_ca3_data_13.csv"
+study_data <- read.csv(file_name)
+```
+
+### Inspect Data Structure
+```{r Inspect Head, Tail & Structure, echo=TRUE}
+# show data structure
+str(study_data)
+
+# show first N
+head(study_data, 10)
+
+# show last N
+tail(study_data, 10)
+
+# show a paged table with all the data
+rmarkdown::paged_table(study_data)
+```
+
+### Mean and Standard Deviation
+```{r Mean & Median, echo=TRUE}
+pre_trial_cpss_mean <- mean(study_data$pre_trial_cpss)
+pre_trial_cpss_std <- sd(study_data$pre_trial_cpss)
+
+post_trial_cpss_mean <- mean(study_data$post_trial_cpss)
+post_trial_cpss_std <- sd(study_data$post_trial_cpss)
+
+pre_trial_or_mean <- mean(study_data$pre_trial_or)
+pre_trial_or_std <- sd(study_data$pre_trial_or)
+
+post_trial_or_mean <- mean(study_data$post_trial_or)
+post_trial_or_std <- sd(study_data$post_trial_or)
+```
+
+pre_trial_cpss: M = `r round(pre_trial_cpss_mean, 2)`, SD = `r round(pre_trial_cpss_std, 2)`
+
+post_trial_cpss: M = `r round(post_trial_cpss_mean, 2)`, SD = `r round(post_trial_cpss_std, 2)`
+
+pre_trial_or: M = `r round(pre_trial_or_mean, 2)`, SD = `r round(pre_trial_or_std, 2)`
+
+post_trial_or: M = `r round(post_trial_or_mean, 2)`, SD = `r round(post_trial_or_std, 2)`
+
+### Data Summary
+A summary of the data is shown below:
+
+```{r Summary, echo=TRUE}
+summary(study_data)
+#boxplot(student_data$height_cm~student_data$gender)
+```
 
 
 
