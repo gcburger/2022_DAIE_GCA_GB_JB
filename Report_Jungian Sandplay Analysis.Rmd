@@ -17,16 +17,14 @@ output:
     theme: paper
 ---
 
-**WIP**
-
-*We can rename this README or make the main R Notebook file a completely new file if needed*
-
-*2-2.5 pages of text needed, not more than 1200 words excluding plots and tables*
-
 ```{r setup and library load, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 cat('\014')
 ```
+
+**WIP**\
+*We can rename this README or make the main R Notebook file a completely new file if needed*\
+*2-2.5 pages of text needed, not more than 1200 words excluding plots and tables*\
 
 # Abstract
 *NB to be succinct and clear here*
@@ -62,6 +60,8 @@ cat('\014')
 ## Materials
 
 ## Procedure
+
+### Clean Data
 
 ### Load Data
 ```{r Load Data, echo=TRUE}
@@ -114,6 +114,118 @@ A summary of the data is shown below:
 ```{r Summary, echo=TRUE}
 summary(study_data)
 ```
+
+### Three Tests for Normality
+
+#### Method 1: Using Histogram / Density Plot
+```{r Histogram & Density Plot - pre_trial_cpss, echo=TRUE}
+# draw histogram for pre_trial_cpss
+hist(study_data$pre_trial_cpss, 
+     main = "pre_trial_cpss",
+     xlab = "Measured Score",
+     ylab = "Frequency",
+     breaks = 6)
+```
+
+```{r Histogram & Density Plot - post_trial_cpss, echo=TRUE}
+# draw histogram for post_trial_cpss
+hist(study_data$post_trial_cpss, 
+     main = "post_trial_cpss",
+     xlab = "Measured Score",
+     ylab = "Frequency",
+     breaks = 6)
+```
+
+```{r Histogram & Density Plot - pre_trial_or, echo=TRUE}
+# draw histogram for pre_trial_or
+hist(study_data$pre_trial_or, 
+     main = "pre_trial_or",
+     xlab = "Measured Score",
+     ylab = "Frequency",
+     breaks = 6)
+```
+
+```{r Histogram & Density Plot - post_trial_or, echo=TRUE}
+# draw histogram for post_trial_or
+hist(study_data$post_trial_or, 
+     main = "post_trial_or",
+     xlab = "Measured Score",
+     ylab = "Frequency",
+     breaks = 7)
+```
+
+#### Method 2: Using QQ Plot (Version 1 - using in-built qqnorm())
+*visual inspection test*\
+*samples are close to the qq line so gives a good indication that the data is normally distributed*\
+*though they don't all fall exactly on the line so we'll do the next test to further investigate*\
+```{r QQ Plot - pre_trial_cpss, echo=TRUE}
+# perform qqnorm test on pre_trial_cpss
+qqnorm(study_data$pre_trial_cpss,
+       pch = 2, frame = FALSE)
+qqline(study_data$pre_trial_cpss, 
+       col = "darkorchid", lwd = 1)
+```
+
+```{r QQ Plot - post_trial_cpss, echo=TRUE}
+# perform qqnorm test on post_trial_cpss
+qqnorm(study_data$post_trial_cpss,
+       pch = 2, frame = FALSE)
+qqline(study_data$post_trial_cpss, 
+       col = "darkorchid", lwd = 1)
+```
+
+```{r QQ Plot - pre_trial_or, echo=TRUE}
+# perform qqnorm test on pre_trial_or
+qqnorm(study_data$pre_trial_or,
+       pch = 2, frame = FALSE)
+qqline(study_data$pre_trial_or, 
+       col = "darkorchid", lwd = 1)
+```
+
+```{r QQ Plot - post_trial_or, echo=TRUE}
+# perform qqnorm test on post_trial_or
+qqnorm(study_data$post_trial_or,
+       pch = 2, frame = FALSE)
+qqline(study_data$post_trial_or, 
+       col = "darkorchid", lwd = 1)
+```
+
+#### Method 3: Statistical Test: Shapiro-Wilk
+*the threshold for normality is 0.05*\
+*if the p-value is above the threshold then we can accept the data to be normal*\
+*if the p-value is close to the boundary, we want to test via a fourth method*\
+```{r Shapiro-Wilk - pre_trial_cpss, echo=TRUE}
+# perform shapiro-wilk test on pre_trial_cpss
+pre_trial_cpss_sw <- shapiro.test(study_data$pre_trial_cpss)
+pre_trial_cpss_sw
+```
+A `r pre_trial_cpss_sw$method` was conducted on the pre_trial_cpss data.\
+From the output obtained we can assume normality as the p-value (p=`r round(pre_trial_cpss_sw$p.value, 4)`) is greater than 0.05.
+
+```{r Shapiro-Wilk - post_trial_cpss, echo=TRUE}
+# perform shapiro-wilk test on post_trial_cpss
+post_trial_cpss_sw <- shapiro.test(study_data$post_trial_cpss)
+post_trial_cpss_sw
+```
+A `r post_trial_cpss_sw$method` was conducted on the post_trial_cpss data.\
+*data still needs to be cleaned*\
+From the output obtained we can not assume normality as the p-value (p=`r format.pval(post_trial_cpss_sw$p.value, 5, eps = 0.001)`) is less than 0.05.
+
+```{r Shapiro-Wilk - pre_trial_or, echo=TRUE}
+# perform shapiro-wilk test on pre_trial_or
+pre_trial_or_sw <- shapiro.test(study_data$pre_trial_or)
+pre_trial_or_sw
+```
+A `r pre_trial_or_sw$method` was conducted on the pre_trial_or data.\
+From the output obtained we can assume normality as the p-value (p=`r round(pre_trial_or_sw$p.value, 4)`) is greater than 0.05.
+
+```{r Shapiro-Wilk - post_trial_or, echo=TRUE}
+# perform shapiro-wilk test on post_trial_or
+post_trial_or_sw <- shapiro.test(study_data$post_trial_or)
+post_trial_or_sw
+```
+A `r post_trial_or_sw$method` was conducted on the post_trial_or data.\
+From the output obtained we can assume normality as the p-value (p=`r round(post_trial_or_sw$p.value, 4)`) is greater than 0.05.
 
 
 # Results
