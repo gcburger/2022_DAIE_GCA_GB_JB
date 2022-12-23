@@ -260,13 +260,25 @@ From the output obtained we can assume normality as the p-value (p=`r round(post
 *4. Provide descriptive statistics (graphs and tables) for any assumptions made.*\
 
 ## Descriptive statistics
+*plots - box, bar, scatter, qq plots*
 
 ## Inferential statistics
 *the inference that we are doing on our data requires that the data is normally distributed*\
 
 *6. Determine the 95% confidence interval for the population mean of each group, and the 95% confidence interval for the difference between the means of any two groups for a variable of your choice.*\
 
+95% confidence interval = point estimate +- 1.96 * standard error
+
+SE = sqrt( p(1-p)/n )  - slides 19-20 of chapter 5
+
+p = point estimate +/- 1.96 * SE
+  = PE +/- ***
+We are 95% confident that [PE + x, PE - x] of all animated group
+
+
 *7. Determine the degree of correlation between any explanatory and response variable of your choice.*\
+
+*do student t test - see diamond quality video*
 
 ## Statistical tests
 [7 Types of Statistical Analysis: Definition and Explanation](https://www.analyticssteps.com/blogs/7-types-statistical-analysis-definition-explanation)
