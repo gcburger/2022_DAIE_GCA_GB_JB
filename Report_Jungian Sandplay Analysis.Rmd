@@ -48,6 +48,8 @@ cat('\014')
 
 ## Rationale
 
+*2. Formulate a single hypothesis test to be used to compare the effectiveness of the approaches used during the experiment.*\
+
 ## Hypothesis
 
 
@@ -68,12 +70,31 @@ file_name = "./data/daie_ca3_data_13.csv"
 study_data <- read.csv(file_name)
 ```
 
+*1. Determine whether the data provided are appropriate for the test(s) available and whether any data cleaning is required.*\
+
+### Inspect Data Structure
+```{r Inspect Head, Tail & Structure, echo=TRUE}
+# show data structure
+str(study_data)
+
+# show first N
+head(study_data, 10)
+
+# show last N
+tail(study_data, 10)
+
+# show a paged table containing all the data
+rmarkdown::paged_table(study_data)
+```
+
 ### Clean Data
 ```{r}
 # install.packages("tidyverse")
+# install.packages("dplyr")
 
-# load and attach tidyverse package
+# load and attach tidyverse and dplyr packages
 library(tidyverse)
+library(dplyr)
 
 View(study_data)
 
@@ -85,12 +106,12 @@ class(study_data$post_trial_cpss)
 unique(study_data$gender) # incorrect spelling of value "mal", should be "Male"
 unique(study_data$test_group) # value of "" is present, means missing data
 
-# select variables (selects all valid data - see count is 147 row i.e. 3 rows have invalid/misisng data)
+# select variables (selects all valid data - see count is 147 row i.e. 3 rows have invalid/missing data)
 study_data %>%
   select(gender, test_group, ends_with("cpss")) %>%
   filter(gender %in% c("Male", "Female") 
          & test_group %in% c("Static", "Control", "Animated") 
-         & post_trial_cpss < 10)
+         & post_trial_cpss > 0, post_trial_cpss < 10)
 
 # identify missing data
 #mean(study_data$pre_trial_cpss, na.rm = TRUE) # remove not available observations from pre_trial_cpss variable
@@ -107,21 +128,9 @@ study_data %>%
 
 # check for duplicates (no dupes)
 study_data %>% distinct() # 150 rows returned, so no duplicates
-```
+duplicated(study_data) # all logical vector values are FALSE i.e. no duplicates
 
-### Inspect Data Structure
-```{r Inspect Head, Tail & Structure, echo=TRUE}
-# show data structure
-str(study_data)
-
-# show first N
-head(study_data, 10)
-
-# show last N
-tail(study_data, 10)
-
-# show a paged table containing all the data
-rmarkdown::paged_table(study_data)
+# continue here...
 ```
 
 ### Mean and Standard Deviation
@@ -154,43 +163,30 @@ A summary of the data is shown below:
 summary(study_data)
 ```
 
+*3. Determine if the data meet the assumptions required by any statistical test.*\
+
 ### Three Tests for Normality
+[How to Test for Normality in R](https://www.statology.org/test-for-normality-in-r/)
 
 #### Method 1: Using Histogram / Density Plot
 ```{r Histogram & Density Plot - pre_trial_cpss, echo=TRUE}
 # draw histogram for pre_trial_cpss
-hist(study_data$pre_trial_cpss, 
-     main = "pre_trial_cpss",
-     xlab = "Measured Score",
-     ylab = "Frequency",
-     breaks = 6)
+hist(study_data$pre_trial_cpss, main = "pre_trial_cpss", xlab = "Measured Score", ylab = "Frequency", breaks = 6)
 ```
 
 ```{r Histogram & Density Plot - post_trial_cpss, echo=TRUE}
 # draw histogram for post_trial_cpss
-hist(study_data$post_trial_cpss, 
-     main = "post_trial_cpss",
-     xlab = "Measured Score",
-     ylab = "Frequency",
-     breaks = 6)
+hist(study_data$post_trial_cpss, main = "post_trial_cpss", xlab = "Measured Score", ylab = "Frequency", breaks = 6)
 ```
 
 ```{r Histogram & Density Plot - pre_trial_or, echo=TRUE}
 # draw histogram for pre_trial_or
-hist(study_data$pre_trial_or, 
-     main = "pre_trial_or",
-     xlab = "Measured Score",
-     ylab = "Frequency",
-     breaks = 6)
+hist(study_data$pre_trial_or, main = "pre_trial_or", xlab = "Measured Score", ylab = "Frequency", breaks = 6)
 ```
 
 ```{r Histogram & Density Plot - post_trial_or, echo=TRUE}
 # draw histogram for post_trial_or
-hist(study_data$post_trial_or, 
-     main = "post_trial_or",
-     xlab = "Measured Score",
-     ylab = "Frequency",
-     breaks = 7)
+hist(study_data$post_trial_or, main = "post_trial_or", xlab = "Measured Score", ylab = "Frequency", breaks = 7)
 ```
 
 #### Method 2: Using QQ Plot (Version 1 - using in-built qqnorm())
@@ -199,34 +195,26 @@ hist(study_data$post_trial_or,
 *though they don't all fall exactly on the line so we'll do the next test to further investigate*\
 ```{r QQ Plot - pre_trial_cpss, echo=TRUE}
 # perform qqnorm test on pre_trial_cpss
-qqnorm(study_data$pre_trial_cpss,
-       pch = 2, frame = FALSE)
-qqline(study_data$pre_trial_cpss, 
-       col = "darkorchid", lwd = 1)
+qqnorm(study_data$pre_trial_cpss, pch = 2, frame = FALSE)
+qqline(study_data$pre_trial_cpss, col = "darkorchid", lwd = 1)
 ```
 
 ```{r QQ Plot - post_trial_cpss, echo=TRUE}
 # perform qqnorm test on post_trial_cpss
-qqnorm(study_data$post_trial_cpss,
-       pch = 2, frame = FALSE)
-qqline(study_data$post_trial_cpss, 
-       col = "darkorchid", lwd = 1)
+qqnorm(study_data$post_trial_cpss, pch = 2, frame = FALSE)
+qqline(study_data$post_trial_cpss, col = "darkorchid", lwd = 1)
 ```
 
 ```{r QQ Plot - pre_trial_or, echo=TRUE}
 # perform qqnorm test on pre_trial_or
-qqnorm(study_data$pre_trial_or,
-       pch = 2, frame = FALSE)
-qqline(study_data$pre_trial_or, 
-       col = "darkorchid", lwd = 1)
+qqnorm(study_data$pre_trial_or, pch = 2, frame = FALSE)
+qqline(study_data$pre_trial_or, col = "darkorchid", lwd = 1)
 ```
 
 ```{r QQ Plot - post_trial_or, echo=TRUE}
 # perform qqnorm test on post_trial_or
-qqnorm(study_data$post_trial_or,
-       pch = 2, frame = FALSE)
-qqline(study_data$post_trial_or, 
-       col = "darkorchid", lwd = 1)
+qqnorm(study_data$post_trial_or, pch = 2, frame = FALSE)
+qqline(study_data$post_trial_or, col = "darkorchid", lwd = 1)
 ```
 
 #### Method 3: Statistical Test: Shapiro-Wilk
@@ -269,16 +257,26 @@ From the output obtained we can assume normality as the p-value (p=`r round(post
 
 # Results
 
+*4. Provide descriptive statistics (graphs and tables) for any assumptions made.*\
+
 ## Descriptive statistics
 
 ## Inferential statistics
+*the inference that we are doing on our data requires that the data is normally distributed*\
+
+*6. Determine the 95% confidence interval for the population mean of each group, and the 95% confidence interval for the difference between the means of any two groups for a variable of your choice.*\
+
+*7. Determine the degree of correlation between any explanatory and response variable of your choice.*\
 
 ## Statistical tests
+[7 Types of Statistical Analysis: Definition and Explanation](https://www.analyticssteps.com/blogs/7-types-statistical-analysis-definition-explanation)
 
 ## Magnitude and direction of results
 
 
 # Discussion
+
+*5. Analyse the data to provide the hypothesis testing conclusion.*\
 
 ## Outline findings and relation to the hypothesis
 
