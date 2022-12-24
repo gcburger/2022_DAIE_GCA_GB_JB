@@ -51,6 +51,13 @@ cat('\014')
 *2. Formulate a single hypothesis test to be used to compare the effectiveness of the approaches used during the experiment.*\
 
 ## Hypothesis
+**Null hypothesis: therapy makes no difference, no matter the patient group (i.e. no difference between the pre and post_trial_cpss (oberserver-rated, therapist) scores for Animated and Control groups**
+
+**Our Alternative hypothesis: The effect of animated VR therapy is more positive/sees better results than the effect of standard (no VR) therapy (i.e. the difference between pre and post_trial_cpss scores for the animated group is higher than that of the control group**
+
+**could state that we are focusing on cpss scores and not observer rated scores with the assumption that they would be more accurate, or something like that**
+
+
 We always have the null and the alternate hypothesis.
 The null says no, the experiment didn't make any difference.
 Give them animated models - didn't make any difference.
