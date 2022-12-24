@@ -51,6 +51,48 @@ cat('\014')
 *2. Formulate a single hypothesis test to be used to compare the effectiveness of the approaches used during the experiment.*\
 
 ## Hypothesis
+We always have the null and the alternate hypothesis.
+The null says no, the experiment didn't make any difference.
+Give them animated models - didn't make any difference.
+Male or Female, didn't make any difference.
+Null = no effect
+
+Alternate - something has happened here that is statistically significant
+Though the probability of seeing a difference between pre and post is actually very low
+p-value and t test
+when p-value is below 0.05 - what you're saying is: I got a sample mean before of x, I got a sample mean of afterwards of x+2
+difference is 2 (2/10 e.g.)
+p-value below 0.05 means there's only a 5% that the null hypothesis can still be true given that you see these results
+5% probability that the null hypothesis is true given that we are seeing the difference in values (of means)
+if p-value is so low, and you're seeing the difference in values, and the null hypothesis is true, that's encouraging you to reject the null hypothesis - i.e. < 5% is the probability that the differences in means exist and that the null hypothesis is true
+therefore p-value of <0.05 means reject the null hypothesis i.e something is indeed happening
+
+For the CA we have to state what we think is the null (no effect) hypothesis and what the alternate hypothesis is
+
+If it is quite unlikely to obtain results as in the actual data, we should decide to reject the null hypothesis in favour of the alternative
+
+1. start with a null hypothesis (H0) (that represents no effect/the status quo)
+2. state the alternative hypothesis (Ha) (the represents our research question)
+3. Conduct a hypothesis test under the assumption that the null hypothesis is true, using p-value test which tells us the probability that this has occurred by accident is very low is p-value is < 0.05 i.e. reject null hypothesis - alternative hypothesis is true
+so again p-value <0.05 means that there's only a 5% chance that we would be observing the difference between before and after means if the null hypothesis was true. So because the probability is really low, we have to reject the null hypothesis meaning its not true
+
+If the test results suggest that the data do not provide convincing evidence for the alternative hypothesis, we must stick with the null hypothesis. i.e. if p-value is >= 0.05, null hypothesis is true
+
+- one null and one alternative hypothesis
+- descriptive statistics - plots
+- test for normality
+- an abstract
+- some conclusions, based on p-value reject or accepting null hypothesis
+
+e.g.
+mean before is 0.6
+mean after is 0.7
+the difference between the two means should not be zero, therefore there must be some effect
+so that could be our alternate hypothesis
+null is that no effect happened
+
+only use student t test
+
 
 
 # Method
@@ -88,6 +130,9 @@ rmarkdown::paged_table(study_data)
 ```
 
 ### Clean Data
+if there's an error in a row, we can elimate/ignore the row by filtering and exclude it from the data
+comment on it at the end - a number of records were removed because they were considered to be in error
+
 ```{r}
 # install.packages("tidyverse")
 # install.packages("dplyr")
@@ -273,7 +318,7 @@ SE = sqrt( p(1-p)/n )  - slides 19-20 of chapter 5
 
 p = point estimate +/- 1.96 * SE
   = PE +/- ***
-We are 95% confident that [PE + x, PE - x] of all animated group
+We are 95% confident that [PE + x, PE - x] of all animated group patients, PTSD therapy helped them
 
 
 *7. Determine the degree of correlation between any explanatory and response variable of your choice.*\
@@ -296,6 +341,19 @@ We are 95% confident that [PE + x, PE - x] of all animated group
 
 
 # References
-- *list here*
--
--
+- [Clean your data with R. R programming for beginners](https://www.youtube.com/watch?v=sV5lwAJ7vnQ&t=2s&ab_channel=RProgramming101)
+- [Foundations for Inference: Point Estimates](https://www.youtube.com/watch?v=oLW_uzkPZGA&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
+- [Intro to Confidence Intervals via Proportions](https://www.youtube.com/watch?v=A6_W8qY8zJo&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
+- [Hypothesis Testing Fundamentals](https://www.youtube.com/watch?v=NVbPE1_Cbx8&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
+- [Inference for Estimators Other Than the Mean](https://www.youtube.com/watch?v=PUMBNtVKr_g&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
+- [Why do we so often use 0.05 for hypothesis testing?](https://www.openintro.org/book/stat/why05/)
+- [5 1A t distribution](https://www.youtube.com/watch?v=uVEj2uBJfq0&list=PLkIselvEzpM5G3IO1tzQ-DUThsJKQzQCD&ab_channel=Mine%C3%87etinkaya-Rundel)
+- [5 1B Inference for a mean](https://www.youtube.com/watch?v=RYVIGj1l4xs&list=PLkIselvEzpM5G3IO1tzQ-DUThsJKQzQCD&ab_channel=Mine%C3%87etinkaya-Rundel)
+- [5 2 Inference for paired data](https://www.youtube.com/watch?v=K0QZ9_4w0HU&list=PLkIselvEzpM5G3IO1tzQ-DUThsJKQzQCD&ab_channel=Mine%C3%87etinkaya-Rundel)
+- [5 3 Difference of two independent means](https://www.youtube.com/watch?v=emZ24asR2F4&list=PLkIselvEzpM5G3IO1tzQ-DUThsJKQzQCD&ab_channel=Mine%C3%87etinkaya-Rundel)
+- [Writing in the sciences...: Lab Reports](https://dkit.ie.libguides.com/writinginthesciences/LabReports)
+- [How to Write a Lab Report](https://www.slideshare.net/libhgtc/how-to-write-a-lab-report-45656386)
+- [Writing a Laboratory Report original (2016)](https://www.discoveringstatistics.com/docs/writinglabreports.pdf)
+- [DPLYR Tutorial: Data Manipulation](https://www.listendata.com/2016/08/dplyr-tutorial.html)
+- [How to Test for Normality in R](https://www.statology.org/test-for-normality-in-r/)
+- [7 Types of Statistical Analysis: Definition and Explanation](https://www.analyticssteps.com/blogs/7-types-statistical-analysis-definition-explanation)
