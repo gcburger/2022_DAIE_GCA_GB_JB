@@ -1,6 +1,6 @@
----
+--- 
 title: "Descriptive & Inferential Analysis of a Jungian Sandplay VR Project"
-subtitle: "Normality testing of patient treatment"
+subtitle: "Normality testing of patient treatment - Code"
 author: "Gareth Burger &amp; James Bunt"
 date: "`r format(Sys.time(), '%a, %d %B %y at %X')`"
 fontsize: "10pt"
