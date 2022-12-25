@@ -41,6 +41,18 @@ cat('\014')
 
 ## Findings/implications
 
+There are a few important factors that should be considered when conducting this experiment which has not been explicitly mentioned so must be considered and noted as it impacts the reliability of analysis and results.
+
+Firstly, it is important to ensure that the study is conducted in a controlled and standardized manner. This means that the sample of patients should be selected using a random sampling method, and the groups should be of equal size to avoid any potential bias. From the information provided, since an appropriate random sampling approach has been followed, this is deemed to be appropriate and reliable however it should be noted that we have no information regarding other treatment which the patients could be involved with (since all patients have diagnosed PTSD, treatment is likely) which can directly impact the reliability of these results.
+
+Second, studies like this should be designed to control for potential confounders, such as the patient's age, gender, and any other factors that could affect the outcome of the experiment. Whilst gender is controlled within sampling and measured, age is witin a stated range of 18-25 years hopwever it has not been recorded for validation therefore we can not robustly prove that no age bias has been prevented or is impacting results. 
+
+Third, it is important that this study should use valid and reliable measures to assess the patients' PTSD levels, both at the start and end of the study therefore all CPSS results have been discounted since they are self reported and uncontrolled. Focusing analysis on the observer rated results (OR) will help ensure that the results of the study are accurate and can be compared across the different groups.
+
+Fourth, it should be noted that it is important to ensure that the therapists administering the treatment are trained and experienced in using the VR app, as well as in providing traditional CBT which has not been validated within the information provided. It is important that patients are receiving high-quality, consistent treatment (i.e. different patients are not recieving different experiences) so that any differences in outcomes between the groups can be attributed to the VR app.
+
+Finally, the study should include a sufficient number of patients to provide statistical power and to ensure that the results are statistically significant. It has been deemed that the 150 patient population is sufficient for this analysis and will help ensure that any observed differences between the groups can be confidently attributed to the VR app rather than to chance.
+
 
 # Introduction
 
@@ -52,6 +64,7 @@ cat('\014')
 
 ## Hypothesis
 
+One possible hypothesis test that could be used to compare the effectiveness of the different approaches used in the experiment is a two-tailed independent samples t-test. This test could be used to compare the mean change in PTSD levels (as measured by the pre-trial and post-trial CPSS and OR scores) between the Static and Animated groups, with the null hypothesis being that there is no significant difference between the two groups. This test would help determine if the use of animated VR content leads to significantly greater reductions in PTSD levels than the use of static VR content.
 
 # Method
 
