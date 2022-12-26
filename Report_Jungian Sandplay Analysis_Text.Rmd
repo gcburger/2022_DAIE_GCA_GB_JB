@@ -26,20 +26,49 @@ cat('\014')
 *We can rename this README or make the main R Notebook file a completely new file if needed*\
 *2-2.5 pages of text needed, not more than 1200 words excluding plots and tables*\
 
-# Abstract
-*NB to be succinct and clear here*
+# 3. Abstract
 
-## Aim and rationale
+Based on the data provided of an experiment with 149 patients (1 removed) to test the effectiveness of VR treatment on PTSD, it is reasonable to conclude that the VR treatment (both animated and static) had a positive effect on PTSD, regardless of gender.
 
-## Participants and setting
+Observer reviewed test results were only considered since participant self assessments are unreliable. Results comparing the pre and post PTSD scores after treatement yielded a 15.01% reduction compared to the control group's reduction of 11.25% (+3.8%), it is reasonable to conclude that the VR treatment had a positive effect on PTSD so a null hypothesis that VR treatment does not impact PTSD can be rejected and an alternative hypothesis that VR treatment will result in a greater reduction in PTSD compared to the control group is suggested.
 
-## Experiment design
+It is important to keep in mind that the above hypothesis is a prediction and not a definitive statement about the relationship between the VR treatment and reduced PTSD, but rather a starting point for further investigation. It should also be noted that with limited information regarding the age of participants and conflicting treatment, the reliability of the experiement can not be validated at this time.
 
-## Results gathering
 
-## Major findings
+# 4. Introduction
 
-## Findings/implications
+To understand the impact of 
+
+## Topic and context
+
+## Rationale
+
+Population: 149 patients analysed (1 removed due to missing data). OR pre and post scores were soley analysed due to reliability concerns of CPSS data, with a focus on the variance between the two scores (impact).
+All test groups experienced improvement: Min, median and max reduced post all test groups, including control group, by 13.3% median (-0.72 points)
+Hypothesis - Both animated and static VR therapy reduces PTSD: VR groups reduced PTSD scores by 15.01%, this equals to 3.8% more than the control group (-0.8 compared to -0.54)
+Null hypothesis is rejected since the VR groups experience 3.8% more impact than the group.
+VR impact median reduced by -15.01%. Pre score median was 6.16 with a range of 2.06. Post score median was 5.43 with a range of 5.22.
+No notable difference between VR groups was experienced (animated versus static) with a 0.49% variance in impact (between pre and post scores)
+Control impact median reduced by -11.25%. Pre score median was 5.98 with a range of 4.75. Post score median was 5.31 with a range of 5.44
+Gender: no notable difference between gender for those groups recieving VR Therapy (0.08 or 0.49% range in impact) however note that females were also receptive to the control experience (-12.5% impact in control compared to -15.0% in VR)
+Note: 70% of the 10 participants who experienced the most impact, were males from the static VR group
+Concern: there is no confirmation that participants are not recieving any additional treatment which can easily impact the experiment results therefore the hypothesis can not be validated
+
+*2. Formulate a single hypothesis test to be used to compare the effectiveness of the approaches used during the experiment.*\
+
+## Hypothesis
+
+One possible hypothesis test that could be used to compare the effectiveness of the different approaches used in the experiment is a two-tailed independent samples t-test. This test could be used to compare the mean change in PTSD levels (as measured by the pre-trial and post-trial CPSS and OR scores) between the Static and Animated groups, with the null hypothesis being that there is no significant difference between the two groups. This test would help determine if the use of animated VR content leads to significantly greater reductions in PTSD levels than the use of static VR content.
+
+# 5. Method
+
+## Participants
+
+## Design
+
+## Materials
+
+## Procedure
 
 There are a few important factors that should be considered when conducting this experiment which has not been explicitly mentioned so must be considered and noted as it impacts the reliability of analysis and results.
 
@@ -52,29 +81,6 @@ Third, it is important that this study should use valid and reliable measures to
 Fourth, it should be noted that it is important to ensure that the therapists administering the treatment are trained and experienced in using the VR app, as well as in providing traditional CBT which has not been validated within the information provided. It is important that patients are receiving high-quality, consistent treatment (i.e. different patients are not recieving different experiences) so that any differences in outcomes between the groups can be attributed to the VR app.
 
 Finally, the study should include a sufficient number of patients to provide statistical power and to ensure that the results are statistically significant. It has been deemed that the 150 patient population is sufficient for this analysis and will help ensure that any observed differences between the groups can be confidently attributed to the VR app rather than to chance.
-
-
-# Introduction
-
-## Topic and context
-
-## Rationale
-
-*2. Formulate a single hypothesis test to be used to compare the effectiveness of the approaches used during the experiment.*\
-
-## Hypothesis
-
-One possible hypothesis test that could be used to compare the effectiveness of the different approaches used in the experiment is a two-tailed independent samples t-test. This test could be used to compare the mean change in PTSD levels (as measured by the pre-trial and post-trial CPSS and OR scores) between the Static and Animated groups, with the null hypothesis being that there is no significant difference between the two groups. This test would help determine if the use of animated VR content leads to significantly greater reductions in PTSD levels than the use of static VR content.
-
-# Method
-
-## Participants
-
-## Design
-
-## Materials
-
-## Procedure
 
 ### Load Data
 ```{r Load Data, echo=TRUE}
