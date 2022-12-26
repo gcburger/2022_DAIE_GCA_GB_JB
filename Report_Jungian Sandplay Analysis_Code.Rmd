@@ -26,7 +26,12 @@ cat('\014')
 *We can rename this README or make the main R Notebook file a completely new file if needed*\
 *2-2.5 pages of text needed, not more than 1200 words excluding plots and tables*\
 
+---
+
 # Abstract
+
+---
+
 *NB to be succinct and clear here*
 
 ## Aim and rationale
@@ -41,8 +46,11 @@ cat('\014')
 
 ## Findings/implications
 
+---
 
 # Introduction
+
+---
 
 ## Topic and context
 
@@ -100,9 +108,11 @@ null is that no effect happened
 
 only use student t test
 
-
+---
 
 # Method
+
+---
 
 ## Participants
 
@@ -111,6 +121,14 @@ only use student t test
 ## Materials
 
 ## Procedure
+
+---
+
+# Results
+
+---
+
+## Descriptive statistics
 
 ### Load Data
 ```{r Load Data, echo=TRUE}
@@ -137,7 +155,7 @@ rmarkdown::paged_table(study_data)
 ```
 
 ### Data Cleaning and Filtering
-There are three instances of errors in the data:
+There are three instances of error in the data:
 
 - Row 14: post_trial_cpss has a value of 12 (test_group = Static)
 - Row 42: test_group is missing value 'Static'
@@ -208,105 +226,74 @@ A summary of the data is shown below:
 summary(study_data_filtered)
 ```
 
-### Three Tests for Normality
-[How to Test for Normality in R](https://www.statology.org/test-for-normality-in-r/)
+---
+
+## Inferential statistics
+The inference and statistical tests that we are doing on our data make the assumption that the data are normally distributed. Thus the below tests are first carried out to check this assumption by testing for normality.
+
+### Testing for Normality
 
 #### Method 1: Using Histogram / Density Plot
-```{r Histogram & Density Plot - pre_trial_cpss, echo=TRUE}
+```{r Histogram - pre_trial_cpss, echo=TRUE}
 # draw histogram for pre_trial_cpss
-hist(study_data$pre_trial_cpss, main = "pre_trial_cpss", xlab = "Measured Score", ylab = "Frequency", breaks = 6)
+hist(study_data_filtered$pre_trial_cpss, main="Pre Trial CPSS", xlab="Measured Score", ylab="Frequency", breaks=6, col='steelblue')
 ```
 
-```{r Histogram & Density Plot - post_trial_cpss, echo=TRUE}
+```{r Histogram - post_trial_cpss, echo=TRUE}
 # draw histogram for post_trial_cpss
-hist(study_data$post_trial_cpss, main = "post_trial_cpss", xlab = "Measured Score", ylab = "Frequency", breaks = 6)
+hist(study_data_filtered$post_trial_cpss, main="Post Trial CPSS", xlab="Measured Score", ylab="Frequency", breaks=6, col='steelblue')
 ```
 
-```{r Histogram & Density Plot - pre_trial_or, echo=TRUE}
-# draw histogram for pre_trial_or
-hist(study_data$pre_trial_or, main = "pre_trial_or", xlab = "Measured Score", ylab = "Frequency", breaks = 6)
-```
+Both histograms above exhibit data that is normally distributed as they are both roughly "bell-shaped" in nature.
 
-```{r Histogram & Density Plot - post_trial_or, echo=TRUE}
-# draw histogram for post_trial_or
-hist(study_data$post_trial_or, main = "post_trial_or", xlab = "Measured Score", ylab = "Frequency", breaks = 7)
-```
+---
 
-#### Method 2: Using QQ Plot (Version 1 - using in-built qqnorm())
-*visual inspection test*\
-*samples are close to the qq line so gives a good indication that the data is normally distributed*\
-*though they don't all fall exactly on the line so we'll do the next test to further investigate*\
+#### Method 2: Using Q-Q Plot
+
 ```{r QQ Plot - pre_trial_cpss, echo=TRUE}
 # perform qqnorm test on pre_trial_cpss
-qqnorm(study_data$pre_trial_cpss, pch = 2, frame = FALSE)
-qqline(study_data$pre_trial_cpss, col = "darkorchid", lwd = 1)
+qqnorm(study_data_filtered$pre_trial_cpss, pch = 2, frame = FALSE, main="Pre Trial CPSS")
+qqline(study_data_filtered$pre_trial_cpss, col = "darkorchid", lwd = 1)
 ```
 
 ```{r QQ Plot - post_trial_cpss, echo=TRUE}
 # perform qqnorm test on post_trial_cpss
-qqnorm(study_data$post_trial_cpss, pch = 2, frame = FALSE)
-qqline(study_data$post_trial_cpss, col = "darkorchid", lwd = 1)
+qqnorm(study_data_filtered$post_trial_cpss, pch = 2, frame = FALSE, main="Post Trial CPSS")
+qqline(study_data_filtered$post_trial_cpss, col = "darkorchid", lwd = 1)
 ```
 
-```{r QQ Plot - pre_trial_or, echo=TRUE}
-# perform qqnorm test on pre_trial_or
-qqnorm(study_data$pre_trial_or, pch = 2, frame = FALSE)
-qqline(study_data$pre_trial_or, col = "darkorchid", lwd = 1)
-```
+In both Q-Q plots above, the sample points roughly fall along the diagonal Q-Q line and thus give a good indication that the data is normally distributed. However, as not all points fall exactly on the line we will continue testing to investigate further.
 
-```{r QQ Plot - post_trial_or, echo=TRUE}
-# perform qqnorm test on post_trial_or
-qqnorm(study_data$post_trial_or, pch = 2, frame = FALSE)
-qqline(study_data$post_trial_or, col = "darkorchid", lwd = 1)
-```
+---
 
 #### Method 3: Statistical Test: Shapiro-Wilk
-*the threshold for normality is 0.05*\
-*if the p-value is above the threshold then we can accept the data to be normal*\
-*if the p-value is close to the boundary, we want to test via a fourth method*\
+The threshold for normality is 0.05 (5%). If the p-value is above the threshold then we can accept the data to be normally distributed.\
+
 ```{r Shapiro-Wilk - pre_trial_cpss, echo=TRUE}
 # perform shapiro-wilk test on pre_trial_cpss
-pre_trial_cpss_sw <- shapiro.test(study_data$pre_trial_cpss)
+pre_trial_cpss_sw <- shapiro.test(study_data_filtered$pre_trial_cpss)
 pre_trial_cpss_sw
 ```
 A `r pre_trial_cpss_sw$method` was conducted on the pre_trial_cpss data.\
-From the output obtained we can assume normality as the p-value (p=`r round(pre_trial_cpss_sw$p.value, 4)`) is greater than 0.05.
+From the output obtained we can assume normality as the p-value (p = `r round(pre_trial_cpss_sw$p.value, 4)`) is greater than 0.05.
 
 ```{r Shapiro-Wilk - post_trial_cpss, echo=TRUE}
 # perform shapiro-wilk test on post_trial_cpss
-post_trial_cpss_sw <- shapiro.test(study_data$post_trial_cpss)
+post_trial_cpss_sw <- shapiro.test(study_data_filtered$post_trial_cpss)
 post_trial_cpss_sw
 ```
 A `r post_trial_cpss_sw$method` was conducted on the post_trial_cpss data.\
-*data still needs to be cleaned*\
-From the output obtained we can not assume normality as the p-value (p=`r format.pval(post_trial_cpss_sw$p.value, 5, eps = 0.001)`) is less than 0.05.
+From the output obtained we can assume normality as the p-value (p = `r round(post_trial_cpss_sw$p.value, 4)`) is greater than 0.05.
 
-```{r Shapiro-Wilk - pre_trial_or, echo=TRUE}
-# perform shapiro-wilk test on pre_trial_or
-pre_trial_or_sw <- shapiro.test(study_data$pre_trial_or)
-pre_trial_or_sw
-```
-A `r pre_trial_or_sw$method` was conducted on the pre_trial_or data.\
-From the output obtained we can assume normality as the p-value (p=`r round(pre_trial_or_sw$p.value, 4)`) is greater than 0.05.
+As neither p-value is close to the threshold for normality, it is not necessary to test for normality via the fourth method of performing a Kolmogorov-Smirnov test.\
 
-```{r Shapiro-Wilk - post_trial_or, echo=TRUE}
-# perform shapiro-wilk test on post_trial_or
-post_trial_or_sw <- shapiro.test(study_data$post_trial_or)
-post_trial_or_sw
-```
-A `r post_trial_or_sw$method` was conducted on the post_trial_or data.\
-From the output obtained we can assume normality as the p-value (p=`r round(post_trial_or_sw$p.value, 4)`) is greater than 0.05.
+---
 
+## Statistical tests
+*do student t test - see diamond quality video*
+[7 Types of Statistical Analysis: Definition and Explanation](https://www.analyticssteps.com/blogs/7-types-statistical-analysis-definition-explanation)
 
-# Results
-
-*4. Provide descriptive statistics (graphs and tables) for any assumptions made.*\
-
-## Descriptive statistics
-*plots - box, bar, scatter, qq plots*
-
-## Inferential statistics
-*the inference that we are doing on our data requires that the data is normally distributed*\
+**t test here**
 
 *6. Determine the 95% confidence interval for the population mean of each group, and the 95% confidence interval for the difference between the means of any two groups for a variable of your choice.*\
 
@@ -318,18 +305,17 @@ p = point estimate +/- 1.96 * SE
   = PE +/- ***
 We are 95% confident that [PE + x, PE - x] of all animated group patients, PTSD therapy helped them
 
-
 *7. Determine the degree of correlation between any explanatory and response variable of your choice.*\
 
-*do student t test - see diamond quality video*
-
-## Statistical tests
-[7 Types of Statistical Analysis: Definition and Explanation](https://www.analyticssteps.com/blogs/7-types-statistical-analysis-definition-explanation)
+---
 
 ## Magnitude and direction of results
 
+---
 
 # Discussion
+
+---
 
 *5. Analyse the data to provide the hypothesis testing conclusion.*\
 
@@ -337,8 +323,12 @@ We are 95% confident that [PE + x, PE - x] of all animated group patients, PTSD 
 
 ## Limitations (if confounding variables are clearly identified by your group)
 
+---
 
 # References
+
+---
+
 - [Clean your data with R. R programming for beginners](https://www.youtube.com/watch?v=sV5lwAJ7vnQ&t=2s&ab_channel=RProgramming101)
 - [Foundations for Inference: Point Estimates](https://www.youtube.com/watch?v=oLW_uzkPZGA&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
 - [Intro to Confidence Intervals via Proportions](https://www.youtube.com/watch?v=A6_W8qY8zJo&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
