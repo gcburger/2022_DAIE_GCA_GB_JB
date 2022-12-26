@@ -1,20 +1,24 @@
 --- 
 title: "Descriptive & Inferential Analysis of a Jungian Sandplay VR Project"
-subtitle: "Normality testing of patient treatment - Code"
 author: "Gareth Burger &amp; James Bunt"
 date: "`r format(Sys.time(), '%a, %d %B %y at %X')`"
-fontsize: "10pt"
-output: 
+always_allow_html: true
+output:
   html_document:
-    toc: true
-    toc_title: "Table Of Contents"
-    toc_float: true
+    toc: yes
+    toc_title: Table Of Contents
+    toc_float: yes
     toc_depth: 3
-    fig_caption: false
-    lof: true
-    number_sections: true
+    fig_caption: no
+    lof: yes
+    number_sections: yes
     code_folding: hide
     theme: paper
+  pdf_document:
+    toc: true
+    toc_depth: '3'
+fontsize: 10pt
+subtitle: "Normality testing of patient treatment - Code"
 ---
 
 ```{r setup and library load, include=FALSE}
@@ -26,7 +30,12 @@ cat('\014')
 *We can rename this README or make the main R Notebook file a completely new file if needed*\
 *2-2.5 pages of text needed, not more than 1200 words excluding plots and tables*\
 
+---
+
 # Abstract
+
+---
+
 *NB to be succinct and clear here*
 
 ## Aim and rationale
@@ -41,8 +50,11 @@ cat('\014')
 
 ## Findings/implications
 
+---
 
 # Introduction
+
+---
 
 ## Topic and context
 
@@ -51,11 +63,11 @@ cat('\014')
 *2. Formulate a single hypothesis test to be used to compare the effectiveness of the approaches used during the experiment.*\
 
 ## Hypothesis
-**Null hypothesis: therapy makes no difference, no matter the patient group (i.e. no difference between the pre and post_trial_cpss (oberserver-rated, therapist) scores for Animated and Control groups**
+**Null hypothesis: therapy makes no difference, no matter the patient group (i.e. no difference between the pre and post_trial_or (oberserver-rated, therapist) scores for Animated and Control groups**
 
-**Our Alternative hypothesis: The effect of animated VR therapy is more positive/sees better results than the effect of standard (no VR) therapy (i.e. the difference between pre and post_trial_cpss scores for the animated group is higher than that of the control group**
+**Our Alternative hypothesis: The effect of animated VR therapy is more positive/sees better results than the effect of standard (no VR) therapy (i.e. the difference between pre and post_trial_or scores for the animated group is higher than that of the control group**
 
-**could state that we are focusing on cpss scores and not observer rated scores with the assumption that they would be more accurate, or something like that**
+**could state that we are focusing on or scores and not observer rated scores with the assumption that they would be more accurate, or something like that**
 
 
 We always have the null and the alternate hypothesis.
@@ -100,9 +112,11 @@ null is that no effect happened
 
 only use student t test
 
-
+---
 
 # Method
+
+---
 
 ## Participants
 
@@ -112,33 +126,46 @@ only use student t test
 
 ## Procedure
 
+---
+
+# Results
+
+---
+
+## Descriptive statistics
+
 ### Load Data
 ```{r Load Data, echo=TRUE}
+# where code is commented out, it's because we don't want it displaying in the final report
+
 # load data from csv
 file_name = "./data/daie_ca3_data_13.csv"
 study_data <- read.csv(file_name)
 ```
 
-*1. Determine whether the data provided are appropriate for the test(s) available and whether any data cleaning is required.*\
-
 ### Inspect Data Structure
 ```{r Inspect Head, Tail & Structure, echo=TRUE}
 # show data structure
-str(study_data)
+#str(study_data)
 
-# show first N
-head(study_data, 10)
+# show first 10 rows
+#head(study_data, 10)
 
-# show last N
-tail(study_data, 10)
+# show last 10 rows
+#tail(study_data, 10)
 
 # show a paged table containing all the data
 rmarkdown::paged_table(study_data)
 ```
 
-### Clean Data
-if there's an error in a row, we can elimate/ignore the row by filtering and exclude it from the data
-comment on it at the end - a number of records were removed because they were considered to be in error
+### Data Cleaning and Filtering
+There are three instances of error in the data:
+
+- Row 14: post_trial_cpss has a value of 12 (test_group = Static)
+- Row 42: test_group is missing value 'Static'
+- Row 64: gender has a value of 'mal'
+
+Our hypothesis is looking at the difference between pre_trial_or and post_trial_or scores for the Control and Animated groups only, not testing gender as a contributing factor, so as it turned out we can safely ignore the errors in the data as they do not form part of the filtered subset we are investigating.
 
 ```{r}
 # install.packages("tidyverse")
@@ -151,58 +178,46 @@ library(dplyr)
 View(study_data)
 
 # variable types
-glimpse(study_data)
-class(study_data$post_trial_cpss)
+#glimpse(study_data)
+```
 
-# find distinct data values for columns
-unique(study_data$gender) # incorrect spelling of value "mal", should be "Male"
-unique(study_data$test_group) # value of "" is present, means missing data
+#### Filtered Subset
+```{r}
+# select filtered data required for hypothesis testing
+study_data_filtered <- study_data %>%
+  select(test_group, ends_with("or")) %>%
+  filter(test_group %in% c("Control", "Animated") 
+         & pre_trial_or > 0, pre_trial_or < 10
+         & post_trial_or > 0, post_trial_or < 10)
 
-# select variables (selects all valid data - see count is 147 row i.e. 3 rows have invalid/missing data)
-study_data %>%
-  select(gender, test_group, ends_with("cpss")) %>%
-  filter(gender %in% c("Male", "Female") 
-         & test_group %in% c("Static", "Control", "Animated") 
-         & post_trial_cpss > 0, post_trial_cpss < 10)
+# check for duplicates
+study_data_filtered %>% distinct() # 100 rows returned, so no duplicates
+duplicated(study_data_filtered) # all logical vector values are FALSE i.e. no duplicates
 
-# identify missing data
-#mean(study_data$pre_trial_cpss, na.rm = TRUE) # remove not available observations from pre_trial_cpss variable
-mean(study_data$pre_trial_cpss) #6.0618
-mean(study_data$post_trial_cpss) #5.4154
-mean(study_data$pre_trial_or) #6.072133
-mean(study_data$post_trial_or) #5.3748
-# all means were able to be calculated, thus there's no missing data in those columns
+# group count check - Control and Animated both have 50 rows so no missing rows
+study_data_filtered %>% count(test_group)
 
-# filter observations of variables that have missing values (does not identify the 1 line with missing data, unsure why yet)
-study_data %>%
-  select(gender, test_group, pre_trial_cpss, post_trial_cpss, pre_trial_or, post_trial_or) %>%
-  filter(!complete.cases(.)) # complete.cases not picking up row 42 '' test_group
+# check for missing score data
+# all means are able to be calculated, thus there's no missing numeric data in those columns
+mean(study_data_filtered$pre_trial_or) # 5.9741
+mean(study_data_filtered$post_trial_or) # 5.3965
 
-# check for duplicates (no dupes)
-study_data %>% distinct() # 150 rows returned, so no duplicates
-duplicated(study_data) # all logical vector values are FALSE i.e. no duplicates
+# extra check for completeness of rows: 0 incomplete rows in subset
+study_data_filtered  %>%
+  filter(!complete.cases(.))
 
-# continue here...
+# manually view and verify filtered data subset
+View(study_data_filtered)
 ```
 
 ### Mean and Standard Deviation
 ```{r Mean & Median, echo=TRUE}
-pre_trial_cpss_mean <- mean(study_data$pre_trial_cpss)
-pre_trial_cpss_std <- sd(study_data$pre_trial_cpss)
+pre_trial_or_mean <- mean(study_data_filtered$pre_trial_or)
+pre_trial_or_std <- sd(study_data_filtered$pre_trial_or)
 
-post_trial_cpss_mean <- mean(study_data$post_trial_cpss)
-post_trial_cpss_std <- sd(study_data$post_trial_cpss)
-
-pre_trial_or_mean <- mean(study_data$pre_trial_or)
-pre_trial_or_std <- sd(study_data$pre_trial_or)
-
-post_trial_or_mean <- mean(study_data$post_trial_or)
-post_trial_or_std <- sd(study_data$post_trial_or)
+post_trial_or_mean <- mean(study_data_filtered$post_trial_or)
+post_trial_or_std <- sd(study_data_filtered$post_trial_or)
 ```
-
-pre_trial_cpss: M = `r round(pre_trial_cpss_mean, 2)`, SD = `r round(pre_trial_cpss_std, 2)`
-
-post_trial_cpss: M = `r round(post_trial_cpss_mean, 2)`, SD = `r round(post_trial_cpss_std, 2)`
 
 pre_trial_or: M = `r round(pre_trial_or_mean, 2)`, SD = `r round(pre_trial_or_std, 2)`
 
@@ -212,110 +227,77 @@ post_trial_or: M = `r round(post_trial_or_mean, 2)`, SD = `r round(post_trial_or
 A summary of the data is shown below:
 
 ```{r Summary, echo=TRUE}
-summary(study_data)
+summary(study_data_filtered)
 ```
 
-*3. Determine if the data meet the assumptions required by any statistical test.*\
+---
 
-### Three Tests for Normality
-[How to Test for Normality in R](https://www.statology.org/test-for-normality-in-r/)
+## Inferential statistics
+The inference and statistical tests that we are doing on our data make the assumption that the data are normally distributed. Thus the below tests are first carried out to check this assumption by testing for normality.
+
+### Testing for Normality
 
 #### Method 1: Using Histogram / Density Plot
-```{r Histogram & Density Plot - pre_trial_cpss, echo=TRUE}
-# draw histogram for pre_trial_cpss
-hist(study_data$pre_trial_cpss, main = "pre_trial_cpss", xlab = "Measured Score", ylab = "Frequency", breaks = 6)
-```
-
-```{r Histogram & Density Plot - post_trial_cpss, echo=TRUE}
-# draw histogram for post_trial_cpss
-hist(study_data$post_trial_cpss, main = "post_trial_cpss", xlab = "Measured Score", ylab = "Frequency", breaks = 6)
-```
-
-```{r Histogram & Density Plot - pre_trial_or, echo=TRUE}
+```{r Histogram - pre_trial_or, echo=TRUE}
 # draw histogram for pre_trial_or
-hist(study_data$pre_trial_or, main = "pre_trial_or", xlab = "Measured Score", ylab = "Frequency", breaks = 6)
+hist(study_data_filtered$pre_trial_or, main="Pre Trial Observer Rated", xlab="Measured Score", ylab="Frequency", breaks=6, col='steelblue')
 ```
 
-```{r Histogram & Density Plot - post_trial_or, echo=TRUE}
+```{r Histogram - post_trial_or, echo=TRUE}
 # draw histogram for post_trial_or
-hist(study_data$post_trial_or, main = "post_trial_or", xlab = "Measured Score", ylab = "Frequency", breaks = 7)
+hist(study_data_filtered$post_trial_or, main="Post Trial Observer Rated", xlab="Measured Score", ylab="Frequency", breaks=6, col='steelblue')
 ```
 
-#### Method 2: Using QQ Plot (Version 1 - using in-built qqnorm())
-*visual inspection test*\
-*samples are close to the qq line so gives a good indication that the data is normally distributed*\
-*though they don't all fall exactly on the line so we'll do the next test to further investigate*\
-```{r QQ Plot - pre_trial_cpss, echo=TRUE}
-# perform qqnorm test on pre_trial_cpss
-qqnorm(study_data$pre_trial_cpss, pch = 2, frame = FALSE)
-qqline(study_data$pre_trial_cpss, col = "darkorchid", lwd = 1)
-```
+Both histograms above exhibit data that is normally distributed as they are both roughly "bell-shaped" in nature.
 
-```{r QQ Plot - post_trial_cpss, echo=TRUE}
-# perform qqnorm test on post_trial_cpss
-qqnorm(study_data$post_trial_cpss, pch = 2, frame = FALSE)
-qqline(study_data$post_trial_cpss, col = "darkorchid", lwd = 1)
-```
+---
+
+#### Method 2: Using Q-Q Plot
 
 ```{r QQ Plot - pre_trial_or, echo=TRUE}
 # perform qqnorm test on pre_trial_or
-qqnorm(study_data$pre_trial_or, pch = 2, frame = FALSE)
-qqline(study_data$pre_trial_or, col = "darkorchid", lwd = 1)
+qqnorm(study_data_filtered$pre_trial_or, pch = 2, frame = FALSE, main="Pre Trial Observer Rated")
+qqline(study_data_filtered$pre_trial_or, col = "darkorchid", lwd = 1)
 ```
 
 ```{r QQ Plot - post_trial_or, echo=TRUE}
 # perform qqnorm test on post_trial_or
-qqnorm(study_data$post_trial_or, pch = 2, frame = FALSE)
-qqline(study_data$post_trial_or, col = "darkorchid", lwd = 1)
+qqnorm(study_data_filtered$post_trial_or, pch = 2, frame = FALSE, main="Post Trial Observer Rated")
+qqline(study_data_filtered$post_trial_or, col = "darkorchid", lwd = 1)
 ```
+
+In both Q-Q plots above, the sample points roughly fall along the diagonal Q-Q line and thus give a good indication that the data is normally distributed. However, as not all points fall exactly on the line we will continue testing to investigate further.
+
+---
 
 #### Method 3: Statistical Test: Shapiro-Wilk
-*the threshold for normality is 0.05*\
-*if the p-value is above the threshold then we can accept the data to be normal*\
-*if the p-value is close to the boundary, we want to test via a fourth method*\
-```{r Shapiro-Wilk - pre_trial_cpss, echo=TRUE}
-# perform shapiro-wilk test on pre_trial_cpss
-pre_trial_cpss_sw <- shapiro.test(study_data$pre_trial_cpss)
-pre_trial_cpss_sw
-```
-A `r pre_trial_cpss_sw$method` was conducted on the pre_trial_cpss data.\
-From the output obtained we can assume normality as the p-value (p=`r round(pre_trial_cpss_sw$p.value, 4)`) is greater than 0.05.
-
-```{r Shapiro-Wilk - post_trial_cpss, echo=TRUE}
-# perform shapiro-wilk test on post_trial_cpss
-post_trial_cpss_sw <- shapiro.test(study_data$post_trial_cpss)
-post_trial_cpss_sw
-```
-A `r post_trial_cpss_sw$method` was conducted on the post_trial_cpss data.\
-*data still needs to be cleaned*\
-From the output obtained we can not assume normality as the p-value (p=`r format.pval(post_trial_cpss_sw$p.value, 5, eps = 0.001)`) is less than 0.05.
+The threshold for normality is 0.05 (5%). If the p-value is above the threshold then we can accept the data to be normally distributed.\
 
 ```{r Shapiro-Wilk - pre_trial_or, echo=TRUE}
 # perform shapiro-wilk test on pre_trial_or
-pre_trial_or_sw <- shapiro.test(study_data$pre_trial_or)
+pre_trial_or_sw <- shapiro.test(study_data_filtered$pre_trial_or)
 pre_trial_or_sw
 ```
 A `r pre_trial_or_sw$method` was conducted on the pre_trial_or data.\
-From the output obtained we can assume normality as the p-value (p=`r round(pre_trial_or_sw$p.value, 4)`) is greater than 0.05.
+From the output obtained we can assume normality as the p-value (p = `r round(pre_trial_or_sw$p.value, 4)`) is greater than 0.05.
 
 ```{r Shapiro-Wilk - post_trial_or, echo=TRUE}
 # perform shapiro-wilk test on post_trial_or
-post_trial_or_sw <- shapiro.test(study_data$post_trial_or)
+post_trial_or_sw <- shapiro.test(study_data_filtered$post_trial_or)
 post_trial_or_sw
 ```
 A `r post_trial_or_sw$method` was conducted on the post_trial_or data.\
-From the output obtained we can assume normality as the p-value (p=`r round(post_trial_or_sw$p.value, 4)`) is greater than 0.05.
+From the output obtained we can assume normality as the p-value (p = `r round(post_trial_or_sw$p.value, 4)`) is greater than 0.05.
 
+As neither p-value is close to the threshold for normality, it is not necessary to test for normality via the fourth method of performing a Kolmogorov-Smirnov test.\
 
-# Results
+---
 
-*4. Provide descriptive statistics (graphs and tables) for any assumptions made.*\
+## Statistical tests
+*do student t test - see diamond quality video*
+[7 Types of Statistical Analysis: Definition and Explanation](https://www.analyticssteps.com/blogs/7-types-statistical-analysis-definition-explanation)
 
-## Descriptive statistics
-*plots - box, bar, scatter, qq plots*
-
-## Inferential statistics
-*the inference that we are doing on our data requires that the data is normally distributed*\
+**t test here**
 
 *6. Determine the 95% confidence interval for the population mean of each group, and the 95% confidence interval for the difference between the means of any two groups for a variable of your choice.*\
 
@@ -327,18 +309,17 @@ p = point estimate +/- 1.96 * SE
   = PE +/- ***
 We are 95% confident that [PE + x, PE - x] of all animated group patients, PTSD therapy helped them
 
-
 *7. Determine the degree of correlation between any explanatory and response variable of your choice.*\
 
-*do student t test - see diamond quality video*
-
-## Statistical tests
-[7 Types of Statistical Analysis: Definition and Explanation](https://www.analyticssteps.com/blogs/7-types-statistical-analysis-definition-explanation)
+---
 
 ## Magnitude and direction of results
 
+---
 
 # Discussion
+
+---
 
 *5. Analyse the data to provide the hypothesis testing conclusion.*\
 
@@ -346,8 +327,12 @@ We are 95% confident that [PE + x, PE - x] of all animated group patients, PTSD 
 
 ## Limitations (if confounding variables are clearly identified by your group)
 
+---
 
 # References
+
+---
+
 - [Clean your data with R. R programming for beginners](https://www.youtube.com/watch?v=sV5lwAJ7vnQ&t=2s&ab_channel=RProgramming101)
 - [Foundations for Inference: Point Estimates](https://www.youtube.com/watch?v=oLW_uzkPZGA&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
 - [Intro to Confidence Intervals via Proportions](https://www.youtube.com/watch?v=A6_W8qY8zJo&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
