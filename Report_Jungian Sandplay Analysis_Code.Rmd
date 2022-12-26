@@ -114,31 +114,36 @@ only use student t test
 
 ### Load Data
 ```{r Load Data, echo=TRUE}
+# where code is commented out, it's because we don't want it displaying in the final report
+
 # load data from csv
 file_name = "./data/daie_ca3_data_13.csv"
 study_data <- read.csv(file_name)
 ```
 
-*1. Determine whether the data provided are appropriate for the test(s) available and whether any data cleaning is required.*\
-
 ### Inspect Data Structure
 ```{r Inspect Head, Tail & Structure, echo=TRUE}
 # show data structure
-str(study_data)
+#str(study_data)
 
-# show first N
-head(study_data, 10)
+# show first 10 rows
+#head(study_data, 10)
 
-# show last N
-tail(study_data, 10)
+# show last 10 rows
+#tail(study_data, 10)
 
 # show a paged table containing all the data
 rmarkdown::paged_table(study_data)
 ```
 
-### Clean Data
-if there's an error in a row, we can elimate/ignore the row by filtering and exclude it from the data
-comment on it at the end - a number of records were removed because they were considered to be in error
+### Data Cleaning and Filtering
+There are three instances of errors in the data:
+
+- Row 14: post_trial_cpss has a value of 12 (test_group = Static)
+- Row 42: test_group is missing value 'Static'
+- Row 64: gender has a value of 'mal'
+
+Our hypothesis is looking at the difference between pre_trial_cpss and post_trial_cpss scores for the Control and Animated groups only, not testing gender as a contributing factor, so as it turned out we can safely ignore the errors in the data as they do not form part of the filtered subset we are investigating.
 
 ```{r}
 # install.packages("tidyverse")
@@ -151,71 +156,57 @@ library(dplyr)
 View(study_data)
 
 # variable types
-glimpse(study_data)
-class(study_data$post_trial_cpss)
+#glimpse(study_data)
+```
 
-# find distinct data values for columns
-unique(study_data$gender) # incorrect spelling of value "mal", should be "Male"
-unique(study_data$test_group) # value of "" is present, means missing data
-
-# select variables (selects all valid data - see count is 147 row i.e. 3 rows have invalid/missing data)
-study_data %>%
-  select(gender, test_group, ends_with("cpss")) %>%
-  filter(gender %in% c("Male", "Female") 
-         & test_group %in% c("Static", "Control", "Animated") 
+#### Filtered Subset
+```{r}
+# select filtered data required for hypothesis testing
+study_data_filtered <- study_data %>%
+  select(test_group, ends_with("cpss")) %>%
+  filter(test_group %in% c("Control", "Animated") 
+         & pre_trial_cpss > 0, pre_trial_cpss < 10
          & post_trial_cpss > 0, post_trial_cpss < 10)
 
-# identify missing data
-#mean(study_data$pre_trial_cpss, na.rm = TRUE) # remove not available observations from pre_trial_cpss variable
-mean(study_data$pre_trial_cpss) #6.0618
-mean(study_data$post_trial_cpss) #5.4154
-mean(study_data$pre_trial_or) #6.072133
-mean(study_data$post_trial_or) #5.3748
-# all means were able to be calculated, thus there's no missing data in those columns
+# check for duplicates
+study_data_filtered %>% distinct() # 100 rows returned, so no duplicates
+duplicated(study_data_filtered) # all logical vector values are FALSE i.e. no duplicates
 
-# filter observations of variables that have missing values (does not identify the 1 line with missing data, unsure why yet)
-study_data %>%
-  select(gender, test_group, pre_trial_cpss, post_trial_cpss, pre_trial_or, post_trial_or) %>%
-  filter(!complete.cases(.)) # complete.cases not picking up row 42 '' test_group
+# group count check - Control and Animated both have 50 rows so no missing rows
+study_data_filtered %>% count(test_group)
 
-# check for duplicates (no dupes)
-study_data %>% distinct() # 150 rows returned, so no duplicates
-duplicated(study_data) # all logical vector values are FALSE i.e. no duplicates
+# check for missing score data
+# all means are able to be calculated, thus there's no missing numeric data in those columns
+mean(study_data_filtered$pre_trial_cpss) # 5.9691
+mean(study_data_filtered$post_trial_cpss) # 5.4046
 
-# continue here...
+# extra check for completeness of rows: 0 incomplete rows in subset
+study_data_filtered  %>%
+  filter(!complete.cases(.))
+
+# manually view and verify filtered data subset
+View(study_data_filtered)
 ```
 
 ### Mean and Standard Deviation
 ```{r Mean & Median, echo=TRUE}
-pre_trial_cpss_mean <- mean(study_data$pre_trial_cpss)
-pre_trial_cpss_std <- sd(study_data$pre_trial_cpss)
+pre_trial_cpss_mean <- mean(study_data_filtered$pre_trial_cpss)
+pre_trial_cpss_std <- sd(study_data_filtered$pre_trial_cpss)
 
-post_trial_cpss_mean <- mean(study_data$post_trial_cpss)
-post_trial_cpss_std <- sd(study_data$post_trial_cpss)
-
-pre_trial_or_mean <- mean(study_data$pre_trial_or)
-pre_trial_or_std <- sd(study_data$pre_trial_or)
-
-post_trial_or_mean <- mean(study_data$post_trial_or)
-post_trial_or_std <- sd(study_data$post_trial_or)
+post_trial_cpss_mean <- mean(study_data_filtered$post_trial_cpss)
+post_trial_cpss_std <- sd(study_data_filtered$post_trial_cpss)
 ```
 
 pre_trial_cpss: M = `r round(pre_trial_cpss_mean, 2)`, SD = `r round(pre_trial_cpss_std, 2)`
 
 post_trial_cpss: M = `r round(post_trial_cpss_mean, 2)`, SD = `r round(post_trial_cpss_std, 2)`
 
-pre_trial_or: M = `r round(pre_trial_or_mean, 2)`, SD = `r round(pre_trial_or_std, 2)`
-
-post_trial_or: M = `r round(post_trial_or_mean, 2)`, SD = `r round(post_trial_or_std, 2)`
-
 ### Data Summary
 A summary of the data is shown below:
 
 ```{r Summary, echo=TRUE}
-summary(study_data)
+summary(study_data_filtered)
 ```
-
-*3. Determine if the data meet the assumptions required by any statistical test.*\
 
 ### Three Tests for Normality
 [How to Test for Normality in R](https://www.statology.org/test-for-normality-in-r/)
