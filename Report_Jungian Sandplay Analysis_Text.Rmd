@@ -1,20 +1,23 @@
 ---
 title: "Descriptive & Inferential Analysis of a Jungian Sandplay VR Project"
-subtitle: "Normality testing of patient treatment - Report"
 author: "Gareth Burger &amp; James Bunt"
 date: "`r format(Sys.time(), '%a, %d %B %y at %X')`"
-fontsize: "10pt"
-output: 
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
   html_document:
-    toc: true
-    toc_title: "Table Of Contents"
-    toc_float: true
+    toc: yes
+    toc_title: Table Of Contents
+    toc_float: yes
     toc_depth: 3
-    fig_caption: false
-    lof: true
-    number_sections: true
+    fig_caption: no
+    lof: yes
+    number_sections: yes
     code_folding: hide
     theme: paper
+fontsize: 10pt
+subtitle: "Normality testing of patient treatment - Report"
 ---
 
 ```{r setup and library load, include=FALSE}
@@ -108,6 +111,25 @@ We are 95% confident that [PE + x, PE - x] of all animated group
 Outline findings and relation to the hypothesis
 
 Limitations (if confounding variables are clearly identified by your group)
+
+1. Determine whether the data provided are appropriate for the test(s) available and whether any data cleaning is required.
+- Cleaning of the data was required, specifically; 1 row had to be removed due to a missing test group, 1 row had a mispelt gender which was corrected and 1 row had a CPSS post result of 12 (2 over the maximum scale) however this row was kept in the set as only the OR data was considered in this analysis.
+- Is the data appropriate for the tests available? (is 50 big enough for each test group?)
+
+2. Formulate a single hypothesis test to be used to compare the effectiveness of the approaches used during the experiment.
+
+3. Determine if the data meet the assumptions required by any statistical test.
+
+4. Provide descriptive statistics (graphs and tables) for any assumptions made.
+
+5. Analyse the data to provide the hypothesis testing conclusion.
+
+6. Determine the 95% confidence interval for the population mean of each group, and
+the 95% confidence interval for the difference between the means of any two groups
+for a variable of your choice.
+
+7. Determine the degree of correlation between any explanatory and response variable
+of your choice.
 
 
 # References
