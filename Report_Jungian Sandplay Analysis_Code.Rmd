@@ -481,22 +481,32 @@ We're not aware of any confounding variables in the data provided, however there
 
 ---
 
-- Dooley, M. (2018) 'Jungian Sandplay'. Available at: https://maevedooley.ie/sandplay/. Accessed on 20th December 2022.
+- Bhalla, D. (2016) 'DPLYR Tutorial: Data Manipulation (50 Examples)'. Available at: https://www.listendata.com/2016/08/dplyr-tutorial.html. Accessed on 18 December 2022.
+
+- Çetinkaya-Rundel, M. (2018) '5 1A t distribution'. Available at: https://www.youtube.com/watch?v=uVEj2uBJfq0&list=PLkIselvEzpM5G3IO1tzQ-DUThsJKQzQCD&ab_channel=Mine%C3%87etinkaya-Rundel. Accessed on 22 December 2022.
+
+- Çetinkaya-Rundel, M. (2018) '5 1B Inference for a mean'. Available at: https://www.youtube.com/watch?v=RYVIGj1l4xs&list=PLkIselvEzpM5G3IO1tzQ-DUThsJKQzQCD&ab_channel=Mine%C3%87etinkaya-Rundel. Accessed on 22 December 2022.
+
+- Çetinkaya-Rundel, M. (2018) '5 2 Inference for paired data'. Available at: https://www.youtube.com/watch?v=K0QZ9_4w0HU&list=PLkIselvEzpM5G3IO1tzQ-DUThsJKQzQCD&ab_channel=Mine%C3%87etinkaya-Rundel. Accessed on 22 December 2022.
+
+- Çetinkaya-Rundel, M. (2018) '5 3 Difference of two independent means'. Available at: https://www.youtube.com/watch?v=emZ24asR2F4&list=PLkIselvEzpM5G3IO1tzQ-DUThsJKQzQCD&ab_channel=Mine%C3%87etinkaya-Rundel. Accessed on 22 December 2022.
+
+- Dooley, M. (2018) 'Jungian Sandplay'. Available at: https://maevedooley.ie/sandplay/. Accessed on 20 December 2022.
+
+- Field, A. (2016) 'Writing a Laboratory Report original (2016)'. Available at: https://www.discoveringstatistics.com/docs/writinglabreports.pdf. Accessed on 24 December 2022.
+
 - HSE (2022). 'Post-traumatic stress disorder (PTSD)'. Available at: https://www2.hse.ie/conditions/ptsd/treatment/. Accessed on 21 December 2022.
+
 - Mayo Clinic (2022). 'Post-traumatic stress disorder (PTSD)'. Available at: https://www.mayoclinic.org/diseases-conditions/post-traumatic-stress-disorder/symptoms-causes/syc-20355967. Accessed on 21 December 2022.
 
-- [Clean your data with R. R programming for beginners](https://www.youtube.com/watch?v=sV5lwAJ7vnQ&t=2s&ab_channel=RProgramming101)
-- [Intro to Confidence Intervals via Proportions](https://www.youtube.com/watch?v=A6_W8qY8zJo&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
-- [Hypothesis Testing Fundamentals](https://www.youtube.com/watch?v=NVbPE1_Cbx8&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
-- [Inference for Estimators Other Than the Mean](https://www.youtube.com/watch?v=PUMBNtVKr_g&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
-- [Why do we so often use 0.05 for hypothesis testing?](https://www.openintro.org/book/stat/why05/)
-- [5 1A t distribution](https://www.youtube.com/watch?v=uVEj2uBJfq0&list=PLkIselvEzpM5G3IO1tzQ-DUThsJKQzQCD&ab_channel=Mine%C3%87etinkaya-Rundel)
-- [5 1B Inference for a mean](https://www.youtube.com/watch?v=RYVIGj1l4xs&list=PLkIselvEzpM5G3IO1tzQ-DUThsJKQzQCD&ab_channel=Mine%C3%87etinkaya-Rundel)
-- [5 2 Inference for paired data](https://www.youtube.com/watch?v=K0QZ9_4w0HU&list=PLkIselvEzpM5G3IO1tzQ-DUThsJKQzQCD&ab_channel=Mine%C3%87etinkaya-Rundel)
-- [5 3 Difference of two independent means](https://www.youtube.com/watch?v=emZ24asR2F4&list=PLkIselvEzpM5G3IO1tzQ-DUThsJKQzQCD&ab_channel=Mine%C3%87etinkaya-Rundel)
-- [Writing in the sciences...: Lab Reports](https://dkit.ie.libguides.com/writinginthesciences/LabReports)
-- [How to Write a Lab Report](https://www.slideshare.net/libhgtc/how-to-write-a-lab-report-45656386)
-- [Writing a Laboratory Report original (2016)](https://www.discoveringstatistics.com/docs/writinglabreports.pdf)
-- [DPLYR Tutorial: Data Manipulation](https://www.listendata.com/2016/08/dplyr-tutorial.html)
-- [How to Test for Normality in R](https://www.statology.org/test-for-normality-in-r/)
-- [7 Types of Statistical Analysis: Definition and Explanation](https://www.analyticssteps.com/blogs/7-types-statistical-analysis-definition-explanation)
+- OpenIntroOrg (2019) 'Intro to Confidence Intervals via Proportions'. Available at: https://www.youtube.com/watch?v=A6_W8qY8zJo&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg. Accessed on 21 December 2022.
+
+- OpenIntroOrg (2015) 'Hypothesis Testing Fundamentals'. Available at: https://www.youtube.com/watch?v=NVbPE1_Cbx8&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg. Accessed on 21 December 2022.
+
+- OpenIntroOrg (2014) 'Inference for Estimators Other Than the Mean'. Available at: https://www.youtube.com/watch?v=PUMBNtVKr_g&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg. Accessed on 21 December 2022.
+
+- R Programming 101 (2021) 'Clean your data with R. R programming for beginners'. Available at: https://www.youtube.com/watch?v=sV5lwAJ7vnQ&t=2s&ab_channel=RProgramming101. Accessed on 18 December 2022.
+
+- Tyagi, N. (2022) '7 Types of Statistical Analysis: Definition and Explanation'. Available at: https://www.analyticssteps.com/blogs/7-types-statistical-analysis-definition-explanation. Accessed on 19 December 2022.
+
+- Zach (2021) 'How to Test for Normality in R (4 Methods)'. Available at: https://www.statology.org/test-for-normality-in-r/. Accessed on 18 December 2022.
