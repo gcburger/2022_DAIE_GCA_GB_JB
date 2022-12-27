@@ -26,22 +26,24 @@ cat('\014')
 
 Based on the data provided of an experiment with 149 patients (1 removed) to test the effectiveness of VR treatment on PTSD, it is reasonable to conclude that the VR treatment (both animated and static) had a positive effect on PTSD, regardless of gender.
 
-Observer reviewed test results were only considered since participant self assessments are unreliable. Results comparing the pre and post PTSD scores after treatement yielded a 15.01% reduction compared to the control group's reduction of 11.25% (+3.8%), it is reasonable to conclude that the both animated and static VR treatments have a positive effect on PTSD so a null hypothesis that VR treatment does not impact PTSD can be rejected and an alternative hypothesis that VR treatment will result in a greater reduction in PTSD compared to the control group is suggested.
+The experiment can be deemed as reliable since we have a randomised controlled trial where participants within a pre-determined criteria (young adults aged 18-25 years old) were sourced using random sampling and randomly assigned to one of three test groups (1 control group and 2 different types of VR).
 
-It is important to keep in mind that the above hypothesis is a prediction and not a definitive statement about the relationship between the VR treatment and reduced PTSD, but rather a starting point for further investigation. It should also be noted that with limited information regarding the age of participants and conflicting treatment, the reliability of the experiment can not be validated at this time.
+Observer reviewed test results were only considered since participant self assessments are unreliable. Results comparing the pre and post PTSD scores after treatment yielded a 15.01% reduction compared to the control group's reduction of 11.25% (+3.8%), it is reasonable to conclude that the both animated and static VR treatments have a positive effect on PTSD so a null hypothesis that VR treatment does not impact PTSD can be rejected and an alternative hypothesis that VR treatment will result in a greater reduction in PTSD compared to the control group is suggested.
+
+It is important to keep in mind that the above hypothesis is a prediction and not a definitive statement about the relationship between the VR treatment and reduced PTSD, but rather a starting point for further investigation. It should also be noted that the experiment information available is limited which limits the reliability of findings. Specifically, the age of each participant (i.e. there maybe additional influence of age), the amount of time since diagnosis (since both HSE and Mayo Clinic advise that some PTSD can naturally reduce over time), whether the patient is receiving any potentially conflicting treatment (i.e. PTSD medication) and the time of observation (it has been noted that observations are recorded at the start and end of each day however this is not included in the data provided) can impact the reliability of the experiment which can not be validated at this time.
 
 
 # Introduction
 
-Post-traumatic stress disorder (PTSD) is a mental health condition that's triggered by a terrifying event — either experiencing it or witnessing it. Symptoms may include flashbacks, nightmares and severe anxiety, as well as uncontrollable thoughts about the event (Mayo Clinic, 2022). According to both the HSE (2022) and Mayo Clinic (2022), PTSD symptoms are generally grouped into four types: intrusive memories, avoidance, negative changes in thinking and mood, and changes in physical and emotional reactions and can vary over time or vary from person to person (with or without treatment).
+According to the HSE and Mayo Clinic (2022) Post-traumatic stress disorder (PTSD) is a mental health condition that is triggered by a terrifying event — either experiencing it or witnessing it. Symptoms may include flashbacks, nightmares and severe anxiety, as well as uncontrollable thoughts about the event (Mayo Clinic, 2022). PTSD symptoms can be physical and/ or emotional and can vary over time or vary from person to person (with or without treatment).
 
-Treatment can vary between Psychological therapies (such as CBT) and medication (such as antidepressants). 
+Treatment for PTSD can vary between psychological therapies (such as cognitive behavioural therapy - CBT) and medication (such as antidepressants). This study will only focus on the difference between traditional pyscholigical therapy (CBT) and new VR versions (animated and static) of a Jungian Sandplay  (a therapeutic method that uses sand, miniature objects, and image making within the context of the psychology of Carl Jung (Maeve Dooley, October 2018).
 
-There are several methods employed to assess patient PTSD including observer-rated, self- report, parental report, and physiological measurements. PTSD was assessed using therapist observer-rated (OR) and self-report measurements (CPSS) however only OR pre and post scores were analysed due to reliability concerns of CPSS data, with a focus on the variance between the two scores (impact).
+There are several methods employed to assess patient PTSD including observer-rated (OR), self- reported (CPSS), parental reported, and physiological measurements. Note that only OR pre and post scores were used in this analysis due to reliability concerns of CPSS data since they are self reported outside a controlled and standardised manner which does not meet the requirement for a robust experiment, specific focus will be applied on the variance between the pre and post scores (impact).
 
 ## Hypothesis
 
-Null hypothesis is that VR treatments do not have a greater effect on PTSD than the control group with an alternative hypothesis that both animated and static VR treatments have a positive effect on PTSD.
+Null hypothesis is that VR treatments do not have a greater effect on PTSD than the control group (tranditional CBT therapy) with an alternative hypothesis that both animated and static VR treatments have a positive effect on PTSD.
 
 One possible hypothesis test that could be used to compare the effectiveness of the different approaches used in the experiment is a two-tailed independent samples t-test. This test could be used to compare the mean change in PTSD levels (as measured by the pre-trial and post-trial CPSS and OR scores) between the Static and Animated groups, with the null hypothesis being that there is no significant difference between the two groups. This test would help determine if the use of animated VR content leads to significantly greater reductions in PTSD levels than the use of static VR content.
 
@@ -87,6 +89,10 @@ Note: 70% of the 10 participants who experienced the most impact, were males fro
 ## Inferential statistics
 *the inference that we are doing on our data requires that the data is normally distributed*\
 
+## Statistical tests
+
+## Magnitude and direction of results
+
 *6. Determine the 95% confidence interval for the population mean of each group, and the 95% confidence interval for the difference between the means of any two groups for a variable of your choice.*\
 
 We are 95% confident that [PE + x, PE - x] of all animated group
@@ -101,13 +107,13 @@ We are 95% confident that [PE + x, PE - x] of all animated group
 
 *5. Analyse the data to provide the hypothesis testing conclusion.*\
 
-## Outline findings and relation to the hypothesis
+Outline findings and relation to the hypothesis
 
-## Limitations (if confounding variables are clearly identified by your group)
+Limitations (if confounding variables are clearly identified by your group)
 
 
 # References
+- Dooley, M. (2018)
 - HSE (2022). 'Post-traumatic stress disorder (PTSD)'. Available at: https://www2.hse.ie/conditions/ptsd/treatment/. Accessed on 21 December 2022.
 - Mayo Clinic (2022). 'Post-traumatic stress disorder (PTSD)'. Available at: https://www.mayoclinic.org/diseases-conditions/post-traumatic-stress-disorder/symptoms-causes/syc-20355967. Accessed on 21 December 2022.
--
 -
