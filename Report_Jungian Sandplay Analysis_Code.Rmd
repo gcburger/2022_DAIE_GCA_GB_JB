@@ -188,7 +188,14 @@ study_data_filtered <- study_data %>%
   select(test_group, ends_with("or")) %>%
   filter(test_group %in% c("Control", "Animated") 
          & pre_trial_or > 0, pre_trial_or < 10
-         & post_trial_or > 0, post_trial_or < 10)
+         & post_trial_or > 0, post_trial_or < 10) %>%
+  mutate(trial_or_diff = post_trial_or - pre_trial_or)
+
+subset_control <- study_data_filtered %>%
+  filter(test_group == "Control")
+
+subset_animated <- study_data_filtered %>%
+  filter(test_group == "Animated")
 
 # check for duplicates
 study_data_filtered %>% distinct() # 100 rows returned, so no duplicates
@@ -208,6 +215,8 @@ study_data_filtered  %>%
 
 # manually view and verify filtered data subset
 View(study_data_filtered)
+View(subset_control)
+View(subset_animated)
 ```
 
 ### Mean and Standard Deviation
@@ -218,16 +227,30 @@ pre_trial_or_std <- sd(study_data_filtered$pre_trial_or)
 post_trial_or_mean <- mean(study_data_filtered$post_trial_or)
 post_trial_or_std <- sd(study_data_filtered$post_trial_or)
 ```
-
 pre_trial_or: M = `r round(pre_trial_or_mean, 2)`, SD = `r round(pre_trial_or_std, 2)`
 
 post_trial_or: M = `r round(post_trial_or_mean, 2)`, SD = `r round(post_trial_or_std, 2)`
+
+```{r}
+mean_control_or_diff <- mean(subset_control$trial_or_diff)
+std_control_or_diff <- sd(subset_control$trial_or_diff)
+
+mean_animated_diff <- mean(subset_animated$trial_or_diff)
+std_animated_or_diff <- sd(subset_animated$trial_or_diff)
+```
+control_or_diff: M = `r round(mean_control_or_diff, 2)`, SD = `r round(std_control_or_diff, 2)`
+
+animated_or_diff: M = `r round(mean_animated_diff, 2)`, SD = `r round(std_animated_or_diff, 2)`
 
 ### Data Summary
 A summary of the data is shown below:
 
 ```{r Summary, echo=TRUE}
-summary(study_data_filtered)
+summary(subset_control)
+boxplot(subset_control$trial_or_diff, xlab="", ylab = "Score", main = "Control Group OR Difference")
+
+summary(subset_animated)
+boxplot(subset_animated$trial_or_diff, xlab="", ylab = "Score", main = "Animated Group OR Difference")
 ```
 
 ---
@@ -238,14 +261,18 @@ The inference and statistical tests that we are doing on our data make the assum
 ### Testing for Normality
 
 #### Method 1: Using Histogram / Density Plot
-```{r Histogram - pre_trial_or, echo=TRUE}
+```{r Histograms, echo=TRUE}
 # draw histogram for pre_trial_or
 hist(study_data_filtered$pre_trial_or, main="Pre Trial Observer Rated", xlab="Measured Score", ylab="Frequency", breaks=6, col='steelblue')
-```
 
-```{r Histogram - post_trial_or, echo=TRUE}
 # draw histogram for post_trial_or
 hist(study_data_filtered$post_trial_or, main="Post Trial Observer Rated", xlab="Measured Score", ylab="Frequency", breaks=6, col='steelblue')
+
+# draw histogram for control_or_diff
+hist(subset_control$trial_or_diff, main="Control Group OR Difference", xlab="Score", ylab="Frequency", breaks=6, col='steelblue')
+
+# draw histogram for animated_or_diff
+hist(subset_animated$trial_or_diff, main="Animated Group OR Difference", xlab="Score", ylab="Frequency", breaks=6, col='steelblue')
 ```
 
 Both histograms above exhibit data that is normally distributed as they are both roughly "bell-shaped" in nature.
@@ -254,16 +281,22 @@ Both histograms above exhibit data that is normally distributed as they are both
 
 #### Method 2: Using Q-Q Plot
 
-```{r QQ Plot - pre_trial_or, echo=TRUE}
+```{r QQ Plots, echo=TRUE}
 # perform qqnorm test on pre_trial_or
-qqnorm(study_data_filtered$pre_trial_or, pch = 2, frame = FALSE, main="Pre Trial Observer Rated")
-qqline(study_data_filtered$pre_trial_or, col = "darkorchid", lwd = 1)
-```
+qqnorm(study_data_filtered$pre_trial_or, pch=2, frame=FALSE, main="Pre Trial Observer Rated")
+qqline(study_data_filtered$pre_trial_or, col="darkorchid", lwd=1)
 
-```{r QQ Plot - post_trial_or, echo=TRUE}
 # perform qqnorm test on post_trial_or
-qqnorm(study_data_filtered$post_trial_or, pch = 2, frame = FALSE, main="Post Trial Observer Rated")
-qqline(study_data_filtered$post_trial_or, col = "darkorchid", lwd = 1)
+qqnorm(study_data_filtered$post_trial_or, pch=2, frame=FALSE, main="Post Trial Observer Rated")
+qqline(study_data_filtered$post_trial_or, col="darkorchid", lwd=1)
+
+# perform qqnorm test on control_or_diff
+qqnorm(subset_control$trial_or_diff, pch=2, frame=FALSE, main="Control Group OR Difference")
+qqline(subset_control$trial_or_diff, col="darkorchid", lwd=1)
+
+# perform qqnorm test on animated_or_diff
+qqnorm(subset_animated$trial_or_diff, pch=2, frame=FALSE, main="Animated Group OR Difference")
+qqline(subset_animated$trial_or_diff, col="darkorchid", lwd=1)
 ```
 
 In both Q-Q plots above, the sample points roughly fall along the diagonal Q-Q line and thus give a good indication that the data is normally distributed. However, as not all points fall exactly on the line we will continue testing to investigate further.
@@ -289,25 +322,73 @@ post_trial_or_sw
 A `r post_trial_or_sw$method` was conducted on the post_trial_or data.\
 From the output obtained we can assume normality as the p-value (p = `r round(post_trial_or_sw$p.value, 4)`) is greater than 0.05.
 
+```{r Shapiro-Wilk - control_or_diff, echo=TRUE}
+# perform shapiro-wilk test on control_or_diff
+control_or_diff_sw <- shapiro.test(subset_control$trial_or_diff)
+control_or_diff_sw
+```
+A `r control_or_diff_sw$method` was conducted on the trial_or_diff data of the Control group.\
+From the output obtained we can assume normality as the p-value (p = `r round(control_or_diff_sw$p.value, 4)`) is greater than 0.05.
+
+```{r Shapiro-Wilk - animated_or_diff, echo=TRUE}
+# perform shapiro-wilk test on animated_or_diff
+animated_or_diff_sw <- shapiro.test(subset_animated$trial_or_diff)
+animated_or_diff_sw
+```
+A `r animated_or_diff_sw$method` was conducted on the trial_or_diff data of the Animated group.\
+From the output obtained we can assume normality as the p-value (p = `r round(animated_or_diff_sw$p.value, 4)`) is greater than 0.05.
+
 As neither p-value is close to the threshold for normality, it is not necessary to test for normality via the fourth method of performing a Kolmogorov-Smirnov test.\
 
 ---
 
 ## Statistical tests
-*do student t test - see diamond quality video*
-[7 Types of Statistical Analysis: Definition and Explanation](https://www.analyticssteps.com/blogs/7-types-statistical-analysis-definition-explanation)
-
 **t test here**
+```{r}
+mean(study_data_filtered$pre_trial_or) # 5.9741
+sd(study_data_filtered$pre_trial_or) # 1.042748
+
+mean(study_data_filtered$post_trial_or) # 5.3965
+sd(study_data_filtered$post_trial_or) # 1.119804
+
+n = 50
+
+pre_trial_or_mean <- mean(study_data_filtered$pre_trial_or)
+pre_trial_or_std <- sd(study_data_filtered$pre_trial_or)
+
+post_trial_or_mean <- mean(study_data_filtered$post_trial_or)
+post_trial_or_std <- sd(study_data_filtered$post_trial_or)
+
+```
+
+
+
+
 
 *6. Determine the 95% confidence interval for the population mean of each group, and the 95% confidence interval for the difference between the means of any two groups for a variable of your choice.*\
 
 95% confidence interval = point estimate +- 1.96 * standard error
+x bar (mean) +- 1.96 * standard error
+
+mean = p
 
 SE = sqrt( p(1-p)/n )  - slides 19-20 of chapter 5
+
+or
+
+SE = SD / sqrt(n)
 
 p = point estimate +/- 1.96 * SE
   = PE +/- ***
 We are 95% confident that [PE + x, PE - x] of all animated group patients, PTSD therapy helped them
+
+```{r}
+qt(0.025, df = 49) # t*49 = 2.01
+
+# mean +- t * SD/sqrt(n)
+# mean +- 2.01 * (SD/sqrt(50))
+```
+
 
 *7. Determine the degree of correlation between any explanatory and response variable of your choice.*\
 
@@ -334,7 +415,6 @@ We are 95% confident that [PE + x, PE - x] of all animated group patients, PTSD 
 ---
 
 - [Clean your data with R. R programming for beginners](https://www.youtube.com/watch?v=sV5lwAJ7vnQ&t=2s&ab_channel=RProgramming101)
-- [Foundations for Inference: Point Estimates](https://www.youtube.com/watch?v=oLW_uzkPZGA&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
 - [Intro to Confidence Intervals via Proportions](https://www.youtube.com/watch?v=A6_W8qY8zJo&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
 - [Hypothesis Testing Fundamentals](https://www.youtube.com/watch?v=NVbPE1_Cbx8&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
 - [Inference for Estimators Other Than the Mean](https://www.youtube.com/watch?v=PUMBNtVKr_g&list=PLkIselvEzpM4SHQojH116fYAQJLaN_4Xo&ab_channel=OpenIntroOrg)
