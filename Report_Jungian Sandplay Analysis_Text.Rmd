@@ -22,65 +22,34 @@ knitr::opts_chunk$set(echo = TRUE)
 cat('\014')
 ```
 
-**WIP**\
-*We can rename this README or make the main R Notebook file a completely new file if needed*\
-*2-2.5 pages of text needed, not more than 1200 words excluding plots and tables*\
-
-# 3. Abstract
+# Abstract
 
 Based on the data provided of an experiment with 149 patients (1 removed) to test the effectiveness of VR treatment on PTSD, it is reasonable to conclude that the VR treatment (both animated and static) had a positive effect on PTSD, regardless of gender.
 
-Observer reviewed test results were only considered since participant self assessments are unreliable. Results comparing the pre and post PTSD scores after treatement yielded a 15.01% reduction compared to the control group's reduction of 11.25% (+3.8%), it is reasonable to conclude that the VR treatment had a positive effect on PTSD so a null hypothesis that VR treatment does not impact PTSD can be rejected and an alternative hypothesis that VR treatment will result in a greater reduction in PTSD compared to the control group is suggested.
+Observer reviewed test results were only considered since participant self assessments are unreliable. Results comparing the pre and post PTSD scores after treatement yielded a 15.01% reduction compared to the control group's reduction of 11.25% (+3.8%), it is reasonable to conclude that the both animated and static VR treatments have a positive effect on PTSD so a null hypothesis that VR treatment does not impact PTSD can be rejected and an alternative hypothesis that VR treatment will result in a greater reduction in PTSD compared to the control group is suggested.
 
-It is important to keep in mind that the above hypothesis is a prediction and not a definitive statement about the relationship between the VR treatment and reduced PTSD, but rather a starting point for further investigation. It should also be noted that with limited information regarding the age of participants and conflicting treatment, the reliability of the experiement can not be validated at this time.
-
-There are a few important factors that should be considered when conducting this experiment which has not been explicitly mentioned so must be considered and noted as it impacts the reliability of analysis and results.
-
-Firstly, it is important to ensure that the study is conducted in a controlled and standardized manner. This means that the sample of patients should be selected using a random sampling method, and the groups should be of equal size to avoid any potential bias. From the information provided, since an appropriate random sampling approach has been followed, this is deemed to be appropriate and reliable however it should be noted that we have no information regarding other treatment which the patients could be involved with (since all patients have diagnosed PTSD, treatment is likely) which can directly impact the reliability of these results.
-
-Second, studies like this should be designed to control for potential confounders, such as the patient's age, gender, and any other factors that could affect the outcome of the experiment. Whilst gender is controlled within sampling and measured, age is witin a stated range of 18-25 years hopwever it has not been recorded for validation therefore we can not robustly prove that no age bias has been prevented or is impacting results. 
-
-Third, it is important that this study should use valid and reliable measures to assess the patients' PTSD levels, both at the start and end of the study therefore all CPSS results have been discounted since they are self reported and uncontrolled. Focusing analysis on the observer rated results (OR) will help ensure that the results of the study are accurate and can be compared across the different groups.
-
-Fourth, it should be noted that it is important to ensure that the therapists administering the treatment are trained and experienced in using the VR app, as well as in providing traditional CBT which has not been validated within the information provided. It is important that patients are receiving high-quality, consistent treatment (i.e. different patients are not recieving different experiences) so that any differences in outcomes between the groups can be attributed to the VR app.
-
-Finally, the study should include a sufficient number of patients to provide statistical power and to ensure that the results are statistically significant. It has been deemed that the 150 patient population is sufficient for this analysis and will help ensure that any observed differences between the groups can be confidently attributed to the VR app rather than to chance.
+It is important to keep in mind that the above hypothesis is a prediction and not a definitive statement about the relationship between the VR treatment and reduced PTSD, but rather a starting point for further investigation. It should also be noted that with limited information regarding the age of participants and conflicting treatment, the reliability of the experiment can not be validated at this time.
 
 
-# 4. Introduction
+# Introduction
 
-To understand the impact of 
+Post-traumatic stress disorder (PTSD) is a mental health condition that's triggered by a terrifying event — either experiencing it or witnessing it. Symptoms may include flashbacks, nightmares and severe anxiety, as well as uncontrollable thoughts about the event (Mayo Clinic, 2022). According to both the HSE (2022) and Mayo Clinic (2022), PTSD symptoms are generally grouped into four types: intrusive memories, avoidance, negative changes in thinking and mood, and changes in physical and emotional reactions and can vary over time or vary from person to person (with or without treatment).
 
-## Topic and context
+Treatment can vary between Psychological therapies (such as CBT) and medication (such as antidepressants). 
 
-## Rationale
-
-Population: 149 patients analysed (1 removed due to missing data). OR pre and post scores were soley analysed due to reliability concerns of CPSS data, with a focus on the variance between the two scores (impact).
-All test groups experienced improvement: Min, median and max reduced post all test groups, including control group, by 13.3% median (-0.72 points)
-Hypothesis - Both animated and static VR therapy reduces PTSD: VR groups reduced PTSD scores by 15.01%, this equals to 3.8% more than the control group (-0.8 compared to -0.54)
-Null hypothesis is rejected since the VR groups experience 3.8% more impact than the group.
-VR impact median reduced by -15.01%. Pre score median was 6.16 with a range of 2.06. Post score median was 5.43 with a range of 5.22.
-No notable difference between VR groups was experienced (animated versus static) with a 0.49% variance in impact (between pre and post scores)
-Control impact median reduced by -11.25%. Pre score median was 5.98 with a range of 4.75. Post score median was 5.31 with a range of 5.44
-Gender: no notable difference between gender for those groups recieving VR Therapy (0.08 or 0.49% range in impact) however note that females were also receptive to the control experience (-12.5% impact in control compared to -15.0% in VR)
-Note: 70% of the 10 participants who experienced the most impact, were males from the static VR group
-Concern: there is no confirmation that participants are not recieving any additional treatment which can easily impact the experiment results therefore the hypothesis can not be validated
-
-*2. Formulate a single hypothesis test to be used to compare the effectiveness of the approaches used during the experiment.*\
+There are several methods employed to assess patient PTSD including observer-rated, self- report, parental report, and physiological measurements. PTSD was assessed using therapist observer-rated (OR) and self-report measurements (CPSS) however only OR pre and post scores were analysed due to reliability concerns of CPSS data, with a focus on the variance between the two scores (impact).
 
 ## Hypothesis
 
+Null hypothesis is that VR treatments do not have a greater effect on PTSD than the control group with an alternative hypothesis that both animated and static VR treatments have a positive effect on PTSD.
+
 One possible hypothesis test that could be used to compare the effectiveness of the different approaches used in the experiment is a two-tailed independent samples t-test. This test could be used to compare the mean change in PTSD levels (as measured by the pre-trial and post-trial CPSS and OR scores) between the Static and Animated groups, with the null hypothesis being that there is no significant difference between the two groups. This test would help determine if the use of animated VR content leads to significantly greater reductions in PTSD levels than the use of static VR content.
 
-# 5. Method
+The study consisted of 150 patients (M=75, F=75) divided into the groups listed below, using random sampling. A population of 149 patients were analysed (1 removed due to missing data) with 99 recieving treatment and 50 patients in the control group. All patients were young adults in the age range of 18 - 25 years however information on the exact age was not recorded but gender information was recorded. 
 
-## Participants
+Note that there is no confirmation that participants are not receiving any additional treatment which can easily impact the experiment results therefore the hypothesis can not be validated
 
 ## Design
-
-## Materials
-
-## Procedure
 
 There are a few important factors that should be considered when conducting this experiment which has not been explicitly mentioned so must be considered and noted as it impacts the reliability of analysis and results.
 
@@ -94,199 +63,21 @@ Fourth, it should be noted that it is important to ensure that the therapists ad
 
 Finally, the study should include a sufficient number of patients to provide statistical power and to ensure that the results are statistically significant. It has been deemed that the 150 patient population is sufficient for this analysis and will help ensure that any observed differences between the groups can be confidently attributed to the VR app rather than to chance.
 
-### Load Data
-```{r Load Data, echo=TRUE}
-# load data from csv
-file_name = "./data/daie_ca3_data_13.csv"
-study_data <- read.csv(file_name)
-```
-
-*1. Determine whether the data provided are appropriate for the test(s) available and whether any data cleaning is required.*\
-
-### Inspect Data Structure
-```{r Inspect Head, Tail & Structure, echo=TRUE}
-# show data structure
-str(study_data)
-
-# show first N
-head(study_data, 10)
-
-# show last N
-tail(study_data, 10)
-
-# show a paged table containing all the data
-rmarkdown::paged_table(study_data)
-```
-
-### Clean Data
-```{r}
-# install.packages("tidyverse")
-# install.packages("dplyr")
-
-# load and attach tidyverse and dplyr packages
-library(tidyverse)
-library(dplyr)
-
-View(study_data)
-
-# variable types
-glimpse(study_data)
-class(study_data$post_trial_cpss)
-
-# find distinct data values for columns
-unique(study_data$gender) # incorrect spelling of value "mal", should be "Male"
-unique(study_data$test_group) # value of "" is present, means missing data
-
-# select variables (selects all valid data - see count is 147 row i.e. 3 rows have invalid/missing data)
-study_data %>%
-  select(gender, test_group, ends_with("cpss")) %>%
-  filter(gender %in% c("Male", "Female") 
-         & test_group %in% c("Static", "Control", "Animated") 
-         & post_trial_cpss > 0, post_trial_cpss < 10)
-
-# identify missing data
-#mean(study_data$pre_trial_cpss, na.rm = TRUE) # remove not available observations from pre_trial_cpss variable
-mean(study_data$pre_trial_cpss) #6.0618
-mean(study_data$post_trial_cpss) #5.4154
-mean(study_data$pre_trial_or) #6.072133
-mean(study_data$post_trial_or) #5.3748
-# all means were able to be calculated, thus there's no missing data in those columns
-
-# filter observations of variables that have missing values (does not identify the 1 line with missing data, unsure why yet)
-study_data %>%
-  select(gender, test_group, pre_trial_cpss, post_trial_cpss, pre_trial_or, post_trial_or) %>%
-  filter(!complete.cases(.)) # complete.cases not picking up row 42 '' test_group
-
-# check for duplicates (no dupes)
-study_data %>% distinct() # 150 rows returned, so no duplicates
-duplicated(study_data) # all logical vector values are FALSE i.e. no duplicates
-
-# continue here...
-```
-
-### Mean and Standard Deviation
-```{r Mean & Median, echo=TRUE}
-pre_trial_cpss_mean <- mean(study_data$pre_trial_cpss)
-pre_trial_cpss_std <- sd(study_data$pre_trial_cpss)
-
-post_trial_cpss_mean <- mean(study_data$post_trial_cpss)
-post_trial_cpss_std <- sd(study_data$post_trial_cpss)
-
-pre_trial_or_mean <- mean(study_data$pre_trial_or)
-pre_trial_or_std <- sd(study_data$pre_trial_or)
-
-post_trial_or_mean <- mean(study_data$post_trial_or)
-post_trial_or_std <- sd(study_data$post_trial_or)
-```
-
-pre_trial_cpss: M = `r round(pre_trial_cpss_mean, 2)`, SD = `r round(pre_trial_cpss_std, 2)`
-
-post_trial_cpss: M = `r round(post_trial_cpss_mean, 2)`, SD = `r round(post_trial_cpss_std, 2)`
-
-pre_trial_or: M = `r round(pre_trial_or_mean, 2)`, SD = `r round(pre_trial_or_std, 2)`
-
-post_trial_or: M = `r round(post_trial_or_mean, 2)`, SD = `r round(post_trial_or_std, 2)`
-
-### Data Summary
-A summary of the data is shown below:
-
-```{r Summary, echo=TRUE}
-summary(study_data)
-```
-
-*3. Determine if the data meet the assumptions required by any statistical test.*\
-
-### Three Tests for Normality
-[How to Test for Normality in R](https://www.statology.org/test-for-normality-in-r/)
-
-#### Method 1: Using Histogram / Density Plot
-```{r Histogram & Density Plot - pre_trial_cpss, echo=TRUE}
-# draw histogram for pre_trial_cpss
-hist(study_data$pre_trial_cpss, main = "pre_trial_cpss", xlab = "Measured Score", ylab = "Frequency", breaks = 6)
-```
-
-```{r Histogram & Density Plot - post_trial_cpss, echo=TRUE}
-# draw histogram for post_trial_cpss
-hist(study_data$post_trial_cpss, main = "post_trial_cpss", xlab = "Measured Score", ylab = "Frequency", breaks = 6)
-```
-
-```{r Histogram & Density Plot - pre_trial_or, echo=TRUE}
-# draw histogram for pre_trial_or
-hist(study_data$pre_trial_or, main = "pre_trial_or", xlab = "Measured Score", ylab = "Frequency", breaks = 6)
-```
-
-```{r Histogram & Density Plot - post_trial_or, echo=TRUE}
-# draw histogram for post_trial_or
-hist(study_data$post_trial_or, main = "post_trial_or", xlab = "Measured Score", ylab = "Frequency", breaks = 7)
-```
-
-#### Method 2: Using QQ Plot (Version 1 - using in-built qqnorm())
-*visual inspection test*\
-*samples are close to the qq line so gives a good indication that the data is normally distributed*\
-*though they don't all fall exactly on the line so we'll do the next test to further investigate*\
-```{r QQ Plot - pre_trial_cpss, echo=TRUE}
-# perform qqnorm test on pre_trial_cpss
-qqnorm(study_data$pre_trial_cpss, pch = 2, frame = FALSE)
-qqline(study_data$pre_trial_cpss, col = "darkorchid", lwd = 1)
-```
-
-```{r QQ Plot - post_trial_cpss, echo=TRUE}
-# perform qqnorm test on post_trial_cpss
-qqnorm(study_data$post_trial_cpss, pch = 2, frame = FALSE)
-qqline(study_data$post_trial_cpss, col = "darkorchid", lwd = 1)
-```
-
-```{r QQ Plot - pre_trial_or, echo=TRUE}
-# perform qqnorm test on pre_trial_or
-qqnorm(study_data$pre_trial_or, pch = 2, frame = FALSE)
-qqline(study_data$pre_trial_or, col = "darkorchid", lwd = 1)
-```
-
-```{r QQ Plot - post_trial_or, echo=TRUE}
-# perform qqnorm test on post_trial_or
-qqnorm(study_data$post_trial_or, pch = 2, frame = FALSE)
-qqline(study_data$post_trial_or, col = "darkorchid", lwd = 1)
-```
-
-#### Method 3: Statistical Test: Shapiro-Wilk
-*the threshold for normality is 0.05*\
-*if the p-value is above the threshold then we can accept the data to be normal*\
-*if the p-value is close to the boundary, we want to test via a fourth method*\
-```{r Shapiro-Wilk - pre_trial_cpss, echo=TRUE}
-# perform shapiro-wilk test on pre_trial_cpss
-pre_trial_cpss_sw <- shapiro.test(study_data$pre_trial_cpss)
-pre_trial_cpss_sw
-```
-A `r pre_trial_cpss_sw$method` was conducted on the pre_trial_cpss data.\
-From the output obtained we can assume normality as the p-value (p=`r round(pre_trial_cpss_sw$p.value, 4)`) is greater than 0.05.
-
-```{r Shapiro-Wilk - post_trial_cpss, echo=TRUE}
-# perform shapiro-wilk test on post_trial_cpss
-post_trial_cpss_sw <- shapiro.test(study_data$post_trial_cpss)
-post_trial_cpss_sw
-```
-A `r post_trial_cpss_sw$method` was conducted on the post_trial_cpss data.\
-*data still needs to be cleaned*\
-From the output obtained we can not assume normality as the p-value (p=`r format.pval(post_trial_cpss_sw$p.value, 5, eps = 0.001)`) is less than 0.05.
-
-```{r Shapiro-Wilk - pre_trial_or, echo=TRUE}
-# perform shapiro-wilk test on pre_trial_or
-pre_trial_or_sw <- shapiro.test(study_data$pre_trial_or)
-pre_trial_or_sw
-```
-A `r pre_trial_or_sw$method` was conducted on the pre_trial_or data.\
-From the output obtained we can assume normality as the p-value (p=`r round(pre_trial_or_sw$p.value, 4)`) is greater than 0.05.
-
-```{r Shapiro-Wilk - post_trial_or, echo=TRUE}
-# perform shapiro-wilk test on post_trial_or
-post_trial_or_sw <- shapiro.test(study_data$post_trial_or)
-post_trial_or_sw
-```
-A `r post_trial_or_sw$method` was conducted on the post_trial_or data.\
-From the output obtained we can assume normality as the p-value (p=`r round(post_trial_or_sw$p.value, 4)`) is greater than 0.05.
 
 
 # Results
+
+81% of patients experienced improvement in their PTSD symptoms after VR treatment and overall, all test groups experienced an improvement of 13.3% median improvement (-0.72 points) which supports the hypothesis that both animated and static VR therapy reduces PTSD. VR groups reduced PTSD scores by 15.01%, this equals to 3.8% more than the control group (-0.8 compared to -0.54) whihch means that we can also reject the null hypothesis.
+
+VR impact median reduced by -15.01%. Pre score median was 6.16 with a range of 2.06. Post score median was 5.43 with a range of 5.22.
+
+No notable difference between VR groups was experienced (animated versus static) with a 0.49% variance in impact (between pre and post scores)
+
+Control impact median reduced by -11.25%. Pre score median was 5.98 with a range of 4.75. Post score median was 5.31 with a range of 5.44
+
+Gender: no notable difference between gender for those groups recieving VR Therapy (0.08 or 0.49% range in impact) however note that females were also receptive to the control experience (-12.5% impact in control compared to -15.0% in VR)
+
+Note: 70% of the 10 participants who experienced the most impact, were males from the static VR group
 
 *4. Provide descriptive statistics (graphs and tables) for any assumptions made.*\
 
@@ -298,23 +89,12 @@ From the output obtained we can assume normality as the p-value (p=`r round(post
 
 *6. Determine the 95% confidence interval for the population mean of each group, and the 95% confidence interval for the difference between the means of any two groups for a variable of your choice.*\
 
-95% confidence interval = point estimate +- 1.96 * standard error
-
-SE = sqrt( p(1-p)/n )  - slides 19-20 of chapter 5
-
-p = point estimate +/- 1.96 * SE
-  = PE +/- ***
 We are 95% confident that [PE + x, PE - x] of all animated group
 
 
 *7. Determine the degree of correlation between any explanatory and response variable of your choice.*\
 
 *do student t test - see diamond quality video*
-
-## Statistical tests
-[7 Types of Statistical Analysis: Definition and Explanation](https://www.analyticssteps.com/blogs/7-types-statistical-analysis-definition-explanation)
-
-## Magnitude and direction of results
 
 
 # Discussion
@@ -327,6 +107,7 @@ We are 95% confident that [PE + x, PE - x] of all animated group
 
 
 # References
-- *list here*
+- HSE (2022). 'Post-traumatic stress disorder (PTSD)'. Available at: https://www2.hse.ie/conditions/ptsd/treatment/. Accessed on 21 December 2022.
+- Mayo Clinic (2022). 'Post-traumatic stress disorder (PTSD)'. Available at: https://www.mayoclinic.org/diseases-conditions/post-traumatic-stress-disorder/symptoms-causes/syc-20355967. Accessed on 21 December 2022.
 -
 -
