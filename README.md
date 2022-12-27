@@ -4,12 +4,8 @@
 
 ##### Pair Project Dec 2022: Gareth Burger &amp; James Bunt
 
-\
-
 #### Repository
 R source code: https://github.com/jbunt85/2022_DAIE_GCA_GB_JB
-
-\
 
 #### Report
 For your convenience and to account for any file formatting issues, please find different versions of the report below:
