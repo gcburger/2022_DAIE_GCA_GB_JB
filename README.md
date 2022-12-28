@@ -10,10 +10,8 @@ R source code: https://github.com/jbunt85/2022_DAIE_GCA_GB_JB
 #### Report
 For your convenience and to account for any file formatting issues, please find different versions of the report below:
 
-PDF (R): *repo link here*
+PDF (R): https://github.com/jbunt85/2022_DAIE_GCA_GB_JB/blob/main/output_reports/Report_Jungian_Sandplay_Analysis.pdf
 
-HTML (R): *repo link here*
+HTML (R): https://github.com/jbunt85/2022_DAIE_GCA_GB_JB/blob/main/output_reports/Report_Jungian_Sandplay_Analysis.html
 
-PDF (HTML (R) outputted to 'Print to PDF'): *repo link here*
-
-**You should create a separate fork for this submission and leave it unchanged after the deadline.**
+PDF (HTML (R) outputted to 'Print to PDF'): https://github.com/jbunt85/2022_DAIE_GCA_GB_JB/blob/main/output_reports/Report_Jungian_Sandplay_Analysis_html.pdf
