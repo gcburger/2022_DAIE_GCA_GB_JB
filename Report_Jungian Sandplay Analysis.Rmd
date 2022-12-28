@@ -1,7 +1,7 @@
 --- 
 title: "Descriptive & Inferential Analysis of a Jungian Sandplay VR Project"
 author: "Gareth Burger &amp; James Bunt"
-date: "`r format(Sys.time(), '%a, %d %B %y at %X')`"
+date: "`r format(Sys.time(), '%a, %d %B %y')`"
 always_allow_html: true
 output:
   html_document:
@@ -19,7 +19,6 @@ output:
     toc_depth: 3
     number_sections: true
 fontsize: 10pt
-subtitle: "Normality testing of patient treatment - Code"
 ---
 
 ```{r setup and library load, include=FALSE}
@@ -27,19 +26,13 @@ knitr::opts_chunk$set(echo = TRUE)
 cat('\014')
 ```
 
-**WIP**\
-*We can rename this README or make the main R Notebook file a completely new file if needed*\
-*2-2.5 pages of text needed, not more than 1200 words excluding plots and tables*\
-
 ---
 
 # Abstract
 
 ## Aim and rationale
 
-Data from a study are presented that investigated the effect of Jungian Sandplay therapy, conducted in a virtual reality environment, on psychotherapy patients undergoing treatment for PTSD.
-
-To test the effectiveness of VR treatment on PTSD, it is reasonable to conclude that the animated VR treatment had a positive effect on PTSD, regardless of gender.
+Data from a study are presented that investigated the effect of Jungian Sandplay therapy, conducted in a virtual reality environment, on psychotherapy patients undergoing treatment for PTSD. To test the effectiveness of different types of CBT treatment on PTSD, including that of VR treatment with static and animated model content.
 
 ## Participants and setting
 
@@ -55,19 +48,19 @@ From a design perspective, the experiment can be deemed as reliable since we hav
 
 ## Results gathering
 
-Analysis was focused on the difference between the OR (therapist observer rated) pre and post recordings opposed to self observed results due to reliability and bias concerns.
-
-Observer reviewed test results comparing the pre and post PTSD scores after VR treatment yielded a 15.01% improvement compared to the control group's improvement of 11.25% (+3.8%). Whilst all treatment provided an overall improvement, a null hypothesis that VR treatment does not impact PTSD can be rejected and an alternative hypothesis that VR treatment will result in a greater reduction in PTSD compared to traditional pyshchological therapy (control group) is suggested.
+Analysis was focused on the difference between the OR (therapist observer rated) pre and post therapy scores opposed to the self observed results due to reliability and bias concerns. Sample data was loaded, inspected, cleaned, filtered and grouped before being able to perform calculations and carry out statistical tests.
 
 ## Major findings
 
-It was validated that animated VR therapy yielded the highest improvement to PTSD according to therapist-led OR results by 15.5% compared to control group at 11.25% *include other key stats here*.
+A Student’s t-test performed yielded a p-value of 0.511 indicating that the null hypothesis that there is no difference between different types of Jungian Sandplay therapy should be accepted.
 
 ## Findings/implications
 
+This investigation found no reason to suggest that Jungian Sandplay therapy in VR with animated model content yielded improved PTSD results as compared to that of traditional Jungian Sandplay therapy without the use of VR.
+
 It is important to keep in mind that the above hypothesis is a prediction and not a definitive statement about the relationship between the VR treatment and reduced PTSD, but rather a starting point for further investigation where more information is needed.
 
-Whilst the data meets the assumptions required for a statistical test *Gareth to explain how we can validate this*, it should also be noted that the experiment information available limits the reliability of findings. Specifically, the age of each participant (i.e. there maybe additional influence of age), the amount of time since diagnosis (since both HSE and Mayo Clinic advise that some PTSD can naturally reduce over time), whether the patient is receiving any potentially conflicting treatment (i.e. PTSD medication) and the time of observation (noting that observations are recorded at the start and end of each day which is not recorded) can impact the results and the reliability of the experiment which can not be validated at this time.
+Whilst the data meets the assumptions required for a statistical test, it should also be noted that the experiment information available limits the reliability of findings. Specifically, the age of each participant (i.e. there maybe additional influence of age), the amount of time since diagnosis (since both HSE and Mayo Clinic advise that some PTSD can naturally reduce over time), whether the patient is receiving any potentially conflicting treatment (i.e. PTSD medication) and the time of observation (noting that observations are recorded at the start and end of each day which is not recorded) can impact the results and the reliability of the experiment which can not be validated at this time.
 
 ---
 
@@ -77,7 +70,7 @@ Whilst the data meets the assumptions required for a statistical test *Gareth to
 
 According to the HSE and Mayo Clinic (2022) Post-traumatic stress disorder (PTSD) is a mental health condition that is triggered by a terrifying event — either experiencing it or witnessing it. Symptoms may include flashbacks, nightmares and severe anxiety, as well as uncontrollable thoughts about the event (Mayo Clinic, 2022). PTSD symptoms can be physical and/ or emotional and can vary over time or vary from person to person (with or without treatment).
 
-Treatment for PTSD can vary between psychological therapies (such as cognitive behavioural therapy - CBT) and medication (such as antidepressants). This study will only focus on the difference between traditional pyschological therapy (CBT) and new VR versions (animated) of a Jungian Sandplay  (a therapeutic method that uses sand, miniature objects, and image making within the context of the psychology of Carl Jung (Dooley, 2018).
+Treatment for PTSD can vary between psychological therapies (such as cognitive behavioural therapy - CBT) and medication (such as antidepressants). This study will only focus on the difference between traditional pyschological therapy (CBT) and new VR versions (animated) of a Jungian Sandplay (a therapeutic method that uses sand, miniature objects, and image making within the context of the psychology of Carl Jung (Dooley, 2018).
 
 ## Rationale
 
@@ -87,9 +80,7 @@ To focus analysis, two test groups were compared, specifically the animated VR t
 
 ## Hypothesis
 
-A null hypothesis is that Animated VR therapy does not have a greater effect on PTSD than the control group (traditional CBT therapy) with an alternative hypothesis that both animated VR therapy has a greater, positive effect on PTSD in young adult patients.
-
-Note that there is no confirmation that participants are not receiving any additional treatment which can easily impact the experiment results therefore the hypothesis can not be validated
+A null hypothesis is that animated VR therapy does not have a greater effect on PTSD than traditional CBT therapy, while a alternative hypothesis is that animated VR therapy has a greater positive effect on PTSD as compared to traditional pyshchological therapy.
 
 # Method
 
@@ -297,7 +288,6 @@ Both histograms above exhibit data that could be normally distributed as they ar
 ---
 
 #### Method 2: Using Q-Q Plot
-
 ```{r QQ Plots, echo=TRUE}
 # perform qqnorm test on control_or_diff
 qqnorm(subset_control$trial_or_diff, 
@@ -362,9 +352,12 @@ Looking at these results alongside the histogram and Q-Q plots, it is reasonable
 ---
 
 ## Statistical tests
+The Student's t-Test was performed to be able to determine whether to accept or reject the null hypothesis.
+
 ```{r}
 # perform t-test
-t.test(data = study_data_filtered, trial_or_diff ~ test_group, mu=0, alt="two.sided", conf=0.95)
+hypothesis_ttest <- t.test(data = study_data_filtered, trial_or_diff ~ test_group, mu=0, alt="two.sided", conf=0.95)
+hypothesis_ttest
 ```
 
 ```{r}
@@ -376,32 +369,11 @@ t.test(subset_control$trial_or_diff, mu=0, alt="two.sided", conf=0.95)
 t.test(subset_animated$trial_or_diff, mu=0, alt="two.sided", conf=0.95)
 ```
 
-If there isn't actually a difference between the mean scores of the Control and Animated groups, if the difference is in fact zero (null hypothesis)
-Then what are the changes that from our sample we would get the difference that we observed - the probability of that happening is the p-value
-very low p value, reject the null hypothesis - the assumption that the difference between the means is zero
+The Student's t-test yielded a p-value of `r round(hypothesis_ttest$p.value, 4)` is greater than 0.05 and indicates that the null hypothesis should not be rejected.
 
+The 95% confidence interval for the mean of the difference in pre and post treatment score of the Control group is -0.77 to -0.27.
 
-
-
-*6. Determine the 95% confidence interval for the population mean of each group, and the 95% confidence interval for the difference between the means of any two groups for a variable of your choice.*\
-
-We are 95% confident that [PE + x, PE - x] of all animated group patients, PTSD therapy helped them
-
-p-value and t test
-when p-value is below 0.05 - what you're saying is: I got a sample mean before of x, I got a sample mean of afterwards of x+2
-difference is 2 (2/10 e.g.)
-p-value below 0.05 means there's only a 5% that the null hypothesis can still be true given that you see these results
-5% probability that the null hypothesis is true given that we are seeing the difference in values (of means)
-if p-value is so low, and you're seeing the difference in values, that's encouraging you to reject the null hypothesis - i.e. < 5% is the probability that the differences in means exist and that the null hypothesis is true
-therefore p-value of < 0.05 means reject the null hypothesis i.e something is indeed happening
-
-
-If the test results suggest that the data do not provide convincing evidence for the alternative hypothesis, we must stick with the null hypothesis. i.e. if p-value is >= 0.05, null hypothesis is true
-
----
-
-## Magnitude and direction of results
-**list results**
+The 95% confidence interval for the mean of the difference in pre and post treatment score of the Animated group is -0.91 to -0.37.
 
 ---
 
@@ -409,52 +381,18 @@ If the test results suggest that the data do not provide convincing evidence for
 
 ---
 
-*5. Analyse the data to provide the hypothesis testing conclusion.*\
+## Findings
+The findings from the analysis of the sample data as part of this investigation are listed below:
 
-## Outline findings and relation to the hypothesis
-*then lastly, is there a correlation between something that we put in and something that we get out, are there correlations between 2 variables*
+- The Control group (traditional CBT, no VR) experienced a reduction in observer rated PTSD scores with a mean of `r round(mean_control_or_diff, 2)` and standard deviation of `r round(std_control_or_diff, 2)`.
 
+- The Animated group (animated model content, VR) also experienced a reduction in observer rated PTSD scores with a mean of `r round(mean_animated_or_diff, 2)` and standard deviation of `r round(std_animated_or_diff, 2)`.
 
-81% of patients experienced improvement in their PTSD symptoms after VR treatment and overall, all test groups experienced an improvement of 13.3% median improvement (-0.72 points between pre and post ratings) which supports the alternative hypothesis that both animated VR therapy reduces PTSD.
+- The sample data was found to exhibit that of a normally distributed data set by testing via the histogram plot, Q-Q plot and Shapiro-Wilk methods. Thus we could assume it to be normally distributed in order to be able to carry out the Student's t-test.
 
-VR groups reduced PTSD scores by 15.01%, this equals to 3.8% more than the control group (-0.8 compared to -0.54) which means that we can also reject the null hypothesis.
+- A p-value of `r round(hypothesis_ttest$p.value, 4)` from the Student's t-test is not very significant as the probability of seeing a difference between the mean scores of the Control and Animated groups is high. As the p-value is greater than 0.05, this means that the test results suggest that the data does not provide convincing evidence for the alternative hypothesis and that we should accept the null hypothesis as true. Thus we find that the difference between the means of the change in observed scores of the Control and Animated groups is zero, meaning that there is not a realised difference between traditional Jungian Sandplay therapy without VR and that of Jungian Sandplay therapy in VR with animated model content.
 
-VR impact median reduced by 15.01%. Pre score median was 6.16 with a range of 2.06. Post score median was 5.43 with a range of 5.22.
-
-No notable difference between VR groups was experienced (animated) with a 0.49% variance in impact (between pre and post scores)
-
-Control impact median reduced by -11.25%. Pre score median was 5.98 with a range of 4.75. Post score median was 5.31 with a range of 5.44
-
-No notable difference between gender for those groups recieving VR Therapy (0.08 or 0.49% range in impact) however note that females were also receptive to the control experience (-12.5% impact in control compared to -15.0% in VR)
-
-Note that 70% of the 10 participants who experienced the most impact, were males from the static VR group.
-
-Cleaning of the data was required, specifically; 1 row had to be removed due to a missing test group, 1 row had a mispelt gender which was corrected and 1 row had a CPSS post result of 12 (2 over the maximum scale) however this row was kept in the set as only the OR data was considered in this analysis.
-
-*Gareth - Is the data appropriate for the tests available? (is 50 big enough for each test group?)*
-
-2. Formulate a single hypothesis test to be used to compare the effectiveness of the approaches used during the experiment.
-
-3. Determine if the data meet the assumptions required by any statistical test.
-
-4. Provide descriptive statistics (graphs and tables) for any assumptions made.
-
-5. Analyse the data to provide the hypothesis testing conclusion.
-
-6. Determine the 95% confidence interval for the population mean of each group, and
-the 95% confidence interval for the difference between the means of any two groups
-for a variable of your choice.
-
-7. Determine the degree of correlation between any explanatory and response variable
-of your choice.
-
-
-
-
-
-
-
-## Limitations (if confounding variables are clearly identified by your group)
+## Limitations
 
 We're not aware of any confounding variables in the data provided, however there could be limitations to the study to consider including natural improvements to PTSD without treatment and the impact of other PTSD treatments on the patients being assessed (i.e. medication).
 
