@@ -52,7 +52,7 @@ Analysis was focused on the difference between the OR (therapist observer rated)
 
 ## Major findings
 
-A Student’s t-test performed yielded a p-value of 0.511 indicating that the null hypothesis that there is no difference between different types of Jungian Sandplay therapy should be accepted.
+A Student’s t-test performed yielded a p-value of 0.511 indicating a null hypothesis that animated VR Jungian Sandplay therapy does not have a greater effect on PTSD than traditional CBT Jungian Sandplay therapy.
 
 ## Findings/implications
 
