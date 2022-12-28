@@ -16,7 +16,8 @@ output:
     theme: paper
   pdf_document:
     toc: true
-    toc_depth: '3'
+    toc_depth: 3
+    number_sections: true
 fontsize: 10pt
 subtitle: "Normality testing of patient treatment - Code"
 ---
@@ -38,7 +39,7 @@ cat('\014')
 
 Data from a study are presented that investigated the effect of Jungian Sandplay therapy, conducted in a virtual reality environment, on psychotherapy patients undergoing treatment for PTSD.
 
-To test the effectiveness of VR treatment on PTSD, it is reasonable to conclude that the VR treatment (both animated and static) had a positive effect on PTSD, regardless of gender.
+To test the effectiveness of VR treatment on PTSD, it is reasonable to conclude that the animated VR treatment had a positive effect on PTSD, regardless of gender.
 
 ## Participants and setting
 
@@ -60,7 +61,7 @@ Observer reviewed test results comparing the pre and post PTSD scores after VR t
 
 ## Major findings
 
-It was validated that animated VR therapy yielded the highest improvement to PTSD according to therapist-led OR results by 15.5% compared to the static VR therapy group at 15.0% and control group at 11.25% *include other key stats here*.
+It was validated that animated VR therapy yielded the highest improvement to PTSD according to therapist-led OR results by 15.5% compared to control group at 11.25% *include other key stats here*.
 
 ## Findings/implications
 
@@ -76,7 +77,7 @@ Whilst the data meets the assumptions required for a statistical test *Gareth to
 
 According to the HSE and Mayo Clinic (2022) Post-traumatic stress disorder (PTSD) is a mental health condition that is triggered by a terrifying event — either experiencing it or witnessing it. Symptoms may include flashbacks, nightmares and severe anxiety, as well as uncontrollable thoughts about the event (Mayo Clinic, 2022). PTSD symptoms can be physical and/ or emotional and can vary over time or vary from person to person (with or without treatment).
 
-Treatment for PTSD can vary between psychological therapies (such as cognitive behavioural therapy - CBT) and medication (such as antidepressants). This study will only focus on the difference between traditional pyschological therapy (CBT) and new VR versions (animated and static) of a Jungian Sandplay  (a therapeutic method that uses sand, miniature objects, and image making within the context of the psychology of Carl Jung (Dooley, 2018).
+Treatment for PTSD can vary between psychological therapies (such as cognitive behavioural therapy - CBT) and medication (such as antidepressants). This study will only focus on the difference between traditional pyschological therapy (CBT) and new VR versions (animated) of a Jungian Sandplay  (a therapeutic method that uses sand, miniature objects, and image making within the context of the psychology of Carl Jung (Dooley, 2018).
 
 ## Rationale
 
@@ -88,13 +89,11 @@ To focus analysis, two test groups were compared, specifically the animated VR t
 
 A null hypothesis is that Animated VR therapy does not have a greater effect on PTSD than the control group (traditional CBT therapy) with an alternative hypothesis that both animated VR therapy has a greater, positive effect on PTSD in young adult patients.
 
-*Gareth to look at this paragraph from previous notes to see if we want to scrap or build out* One possible hypothesis test that could be used to compare the effectiveness of the different approaches used in the experiment is a two-tailed independent samples t-test. This test could be used to compare the mean change in PTSD levels (as measured by the pre-trial and post-trial CPSS and OR scores) between the Static and Animated groups, with the null hypothesis being that there is no significant difference between the two groups. This test would help determine if the use of animated VR content leads to significantly greater reductions in PTSD levels than the use of static VR content.
-
 Note that there is no confirmation that participants are not receiving any additional treatment which can easily impact the experiment results therefore the hypothesis can not be validated
 
 # Method
 
-It is unclear though whether the experiment was designed to control for potential confounders, and in particular, the fact that PTSD can reduce naturally without intervention (especially over such as long period such as the 12 weeks the experiment ran) and whether the patients benefited from any other support (i.e. it is common for those who have PTSD to take medication, such as anti-depressants which could imapct results).
+It is unclear though whether the experiment was designed to control for potential confounders, and in particular, the fact that PTSD can reduce naturally without intervention (especially over such as long period such as the 12 weeks the experiment ran) and whether the patients benefited from any other support (i.e. it is common for those who have PTSD to take medication, such as anti-depressants which could impact results).
 
 From a design perspective, the experiment can be deemed as reliable since we have a randomised controlled trial where participants within a pre-determined criteria (young adults aged 18-25 years old) which were sourced using random sampling and randomly assignment to one of three test groups (1 control group and 2 different types of VR).
 
@@ -124,7 +123,7 @@ Based on the information provided, we know that all test groups underwent 12 wee
 
 ## Procedure
 
-*Gareth to include 1-2 intro sentance here for the section*
+Before being able to perform calculations and carry out statistical tests on our data, we need to load, inspect, clean, filter and group it.
 
 ### Load Data
 ```{r Load Data, echo=TRUE}
@@ -144,8 +143,11 @@ study_data <- read.csv(file_name)
 # show last 10 rows
 #tail(study_data, 10)
 
-# show a paged table containing all the data
-rmarkdown::paged_table(study_data)
+# show a table containing all the data
+knitr::kable(study_data, 
+             align = c('c'), 
+             digits = 2, 
+             caption="Study Data")
 ```
 
 ### Data Cleaning and Filtering
@@ -158,16 +160,16 @@ There are three instances of error in the data:
 Our hypothesis is looking at the difference between pre_trial_or and post_trial_or scores for the Control and Animated groups only, not testing gender as a contributing factor, so as it turned out we can safely ignore the errors in the data as they do not form part of the filtered subset we are investigating.
 
 ```{r}
-# install.packages("tidyverse")
-# install.packages("dplyr")
+#install.packages("tidyverse")
+#install.packages("dplyr")
+#install.packages("knitr")
 
-# load and attach tidyverse and dplyr packages
+# load and attach packages
 library(tidyverse)
 library(dplyr)
+library(knitr)
 
-View(study_data)
-
-# variable types
+#View(study_data)
 #glimpse(study_data)
 ```
 
@@ -180,14 +182,6 @@ study_data_filtered <- study_data %>%
          & pre_trial_or > 0, pre_trial_or < 10
          & post_trial_or > 0, post_trial_or < 10) %>%
   mutate(trial_or_diff = post_trial_or - pre_trial_or)
-
-subset_control <- study_data_filtered %>%
-  select(test_group, trial_or_diff) %>%
-  filter(test_group == "Control")
-
-subset_animated <- study_data_filtered %>%
-  select(test_group, trial_or_diff) %>%
-  filter(test_group == "Animated")
 
 # check for duplicates
 study_data_filtered %>% distinct() # 100 rows returned, so no duplicates
@@ -206,10 +200,32 @@ mean(study_data_filtered$trial_or_diff) # -0.5776
 study_data_filtered  %>%
   filter(!complete.cases(.))
 
+# create subsets to separate test groups
+subset_control <- study_data_filtered %>%
+  filter(test_group == "Control")
+
+subset_animated <- study_data_filtered %>%
+  filter(test_group == "Animated")
+
 # manually view and verify filtered data subset
-View(study_data_filtered)
-View(subset_control)
-View(subset_animated)
+#View(study_data_filtered)
+#View(subset_control)
+#View(subset_animated)
+
+knitr::kable(study_data_filtered, 
+             align = c('c'), 
+             digits = 2, 
+             caption = "Filtered Data required for Hypothesis Testing")
+
+knitr::kable(subset_control, 
+             align = c('c'), 
+             digits = 2, 
+             caption="Control Group Subset")
+
+knitr::kable(subset_animated, 
+             align = c('c'), 
+             digits = 2, 
+             caption = "Animated Group Subset")
 ```
 
 ---
@@ -225,22 +241,29 @@ View(subset_animated)
 mean_control_or_diff <- mean(subset_control$trial_or_diff)
 std_control_or_diff <- sd(subset_control$trial_or_diff)
 
-mean_animated_diff <- mean(subset_animated$trial_or_diff)
+mean_animated_or_diff <- mean(subset_animated$trial_or_diff)
 std_animated_or_diff <- sd(subset_animated$trial_or_diff)
 ```
+
+The means and standard deviations of the difference between the pre and post trial observer rated scores for the control and animated groups are shown below:
+
 control_or_diff: M = `r round(mean_control_or_diff, 2)`, SD = `r round(std_control_or_diff, 2)`
 
-animated_or_diff: M = `r round(mean_animated_diff, 2)`, SD = `r round(std_animated_or_diff, 2)`
+animated_or_diff: M = `r round(mean_animated_or_diff, 2)`, SD = `r round(std_animated_or_diff, 2)`
 
 ### Data Summary
 A summary of the data is shown below:
 
 ```{r Summary, echo=TRUE}
 summary(subset_control)
-boxplot(subset_control$trial_or_diff, ylab = "Score", main = "Control Group OR Difference")
+boxplot(subset_control$trial_or_diff, 
+        ylab = "Score", 
+        main = "Control Group OR Difference")
 
 summary(subset_animated)
-boxplot(subset_animated$trial_or_diff, ylab = "Score", main = "Animated Group OR Difference")
+boxplot(subset_animated$trial_or_diff, 
+        ylab = "Score", 
+        main = "Animated Group OR Difference")
 ```
 
 ---
@@ -252,65 +275,55 @@ The inference and statistical tests that we are doing on our data make the assum
 
 #### Method 1: Using Histogram / Density Plot
 ```{r Histograms, echo=TRUE}
-# draw histogram for pre_trial_or
-hist(study_data_filtered$pre_trial_or, main="Pre Trial Observer Rated", xlab="Measured Score", ylab="Frequency", breaks=6, col='steelblue')
-
-# draw histogram for post_trial_or
-hist(study_data_filtered$post_trial_or, main="Post Trial Observer Rated", xlab="Measured Score", ylab="Frequency", breaks=6, col='steelblue')
-
 # draw histogram for control_or_diff
-hist(subset_control$trial_or_diff, main="Control Group OR Difference", xlab="Score", ylab="Frequency", breaks=6, col='steelblue')
+hist(subset_control$trial_or_diff, 
+     main = "Control Group OR Difference", 
+     xlab = "Score", 
+     ylab = "Frequency", 
+     breaks = 6, 
+     col = 'steelblue')
 
 # draw histogram for animated_or_diff
-hist(subset_animated$trial_or_diff, main="Animated Group OR Difference", xlab="Score", ylab="Frequency", breaks=6, col='steelblue')
+hist(subset_animated$trial_or_diff, 
+     main = "Animated Group OR Difference", 
+     xlab = "Score", 
+     ylab = "Frequency", 
+     breaks = 6, 
+     col = 'steelblue')
 ```
 
-Both histograms above exhibit data that is normally distributed as they are both roughly "bell-shaped" in nature.
+Both histograms above exhibit data that could be normally distributed as they are both roughly "bell-shaped" in nature, though the 'Animated Group OR Difference' histogram is slightly right skewed which indicates a few higher scoring outliers.
 
 ---
 
 #### Method 2: Using Q-Q Plot
 
 ```{r QQ Plots, echo=TRUE}
-# perform qqnorm test on pre_trial_or
-qqnorm(study_data_filtered$pre_trial_or, pch=2, frame=FALSE, main="Pre Trial Observer Rated")
-qqline(study_data_filtered$pre_trial_or, col="darkorchid", lwd=1)
-
-# perform qqnorm test on post_trial_or
-qqnorm(study_data_filtered$post_trial_or, pch=2, frame=FALSE, main="Post Trial Observer Rated")
-qqline(study_data_filtered$post_trial_or, col="darkorchid", lwd=1)
-
 # perform qqnorm test on control_or_diff
-qqnorm(subset_control$trial_or_diff, pch=2, frame=FALSE, main="Control Group OR Difference")
-qqline(subset_control$trial_or_diff, col="darkorchid", lwd=1)
+qqnorm(subset_control$trial_or_diff, 
+       pch = 2, 
+       frame = FALSE, 
+       main = "Control Group OR Difference")
+qqline(subset_control$trial_or_diff, 
+       col = "darkorchid", 
+       lwd = 1)
 
 # perform qqnorm test on animated_or_diff
-qqnorm(subset_animated$trial_or_diff, pch=2, frame=FALSE, main="Animated Group OR Difference")
-qqline(subset_animated$trial_or_diff, col="darkorchid", lwd=1)
+qqnorm(subset_animated$trial_or_diff, 
+       pch = 2, 
+       frame = FALSE, 
+       main = "Animated Group OR Difference")
+qqline(subset_animated$trial_or_diff, 
+       col = "darkorchid", 
+       lwd = 1)
 ```
 
-In both Q-Q plots above, the sample points roughly fall along the diagonal Q-Q line and thus give a good indication that the data is normally distributed. However, as not all points fall exactly on the line we will continue testing to investigate further.
+In both Q-Q plots above, the majority of the sample points roughly fall along the diagonal Q-Q line and thus give an indication that the data is normally distributed. However, as not all points fall exactly on the line we will continue testing to investigate further. Again we can see the high outliers in the 'Animated Group OR Difference' plot, with most points falling on the Q-Q line.
 
 ---
 
 #### Method 3: Statistical Test: Shapiro-Wilk
 The threshold for normality is 0.05 (5%). If the p-value is above the threshold then we can accept the data to be normally distributed.\
-
-```{r Shapiro-Wilk - pre_trial_or, echo=TRUE}
-# perform shapiro-wilk test on pre_trial_or
-pre_trial_or_sw <- shapiro.test(study_data_filtered$pre_trial_or)
-pre_trial_or_sw
-```
-A `r pre_trial_or_sw$method` was conducted on the pre_trial_or data.\
-From the output obtained we can assume normality as the p-value (p = `r round(pre_trial_or_sw$p.value, 4)`) is greater than 0.05.
-
-```{r Shapiro-Wilk - post_trial_or, echo=TRUE}
-# perform shapiro-wilk test on post_trial_or
-post_trial_or_sw <- shapiro.test(study_data_filtered$post_trial_or)
-post_trial_or_sw
-```
-A `r post_trial_or_sw$method` was conducted on the post_trial_or data.\
-From the output obtained we can assume normality as the p-value (p = `r round(post_trial_or_sw$p.value, 4)`) is greater than 0.05.
 
 ```{r Shapiro-Wilk - control_or_diff, echo=TRUE}
 # perform shapiro-wilk test on control_or_diff
@@ -326,102 +339,64 @@ animated_or_diff_sw <- shapiro.test(subset_animated$trial_or_diff)
 animated_or_diff_sw
 ```
 A `r animated_or_diff_sw$method` was conducted on the trial_or_diff data of the Animated group.\
-From the output obtained we can assume normality as the p-value (p = `r round(animated_or_diff_sw$p.value, 4)`) is greater than 0.05.
+From the output obtained we cannot assume normality as the p-value (p = `r round(animated_or_diff_sw$p.value, 4)`) is less than 0.05.
 
-As neither p-value is close to the threshold for normality, it is not necessary to test for normality via the fourth method of performing a Kolmogorov-Smirnov test.\
+However, a Shapiro-Wilk in isolation does not guarantee normality or non-normality of data. Interestingly, when you look at the raw source sample data of the pre and post scores for the animated group (and not only the calculated difference between the two), both display Shapiro-Wilk results that indicate normality.
+
+```{r Shapiro-Wilk - animated_pre_trial_or, echo=TRUE}
+# perform shapiro-wilk test on animated_pre_trial_or
+animated_pre_trial_or_sw <- shapiro.test(subset_animated$pre_trial_or)
+animated_pre_trial_or_sw
+```
+
+```{r Shapiro-Wilk - animated_post_trial_or, echo=TRUE}
+# perform shapiro-wilk test on animated_post_trial_or
+animated_post_trial_or_sw <- shapiro.test(subset_animated$post_trial_or)
+animated_post_trial_or_sw
+```
+Animated group: pre_trial_or p-value (p = `r round(animated_pre_trial_or_sw$p.value, 4)`) is greater than 0.05.\
+Animated group: post_trial_or p-value (p = `r round(animated_post_trial_or_sw$p.value, 4)`) is greater than 0.05.
+
+Looking at these results alongside the histogram and Q-Q plots, it is reasonable to say that the trial_or_diff data of the Animated group may be slightly non-normal with some positive skew on the right tail, but also that it is normal enough to be able to perform statistical t-tests.
 
 ---
 
 ## Statistical tests
-**t test here**
 ```{r}
-mean_control_or_diff <- mean(subset_control$trial_or_diff) # -0.52
-std_control_or_diff <- sd(subset_control$trial_or_diff) # 0.88
-
-mean_animated_diff <- mean(subset_animated$trial_or_diff) # -0.64
-std_animated_or_diff <- sd(subset_animated$trial_or_diff) #0.96
-
-
-# H0 is that mean diff between control and animated diff = 0: mu=0
-t.test(study_data_filtered$trial_or_diff~study_data_filtered$test_group, mu=0, alt="two.sided", conf=0.95)
-
-t.test(data = study_data_filtered, trial_or_diff ~ test_group)
-
-
-
+# perform t-test
+t.test(data = study_data_filtered, trial_or_diff ~ test_group, mu=0, alt="two.sided", conf=0.95)
 ```
+
+```{r}
+# perform t-test
+t.test(subset_control$trial_or_diff, mu=0, alt="two.sided", conf=0.95)
+```
+```{r}
+# perform t-test
+t.test(subset_animated$trial_or_diff, mu=0, alt="two.sided", conf=0.95)
+```
+
+If there isn't actually a difference between the mean scores of the Control and Animated groups, if the difference is in fact zero (null hypothesis)
+Then what are the changes that from our sample we would get the difference that we observed - the probability of that happening is the p-value
+very low p value, reject the null hypothesis - the assumption that the difference between the means is zero
+
 
 
 
 *6. Determine the 95% confidence interval for the population mean of each group, and the 95% confidence interval for the difference between the means of any two groups for a variable of your choice.*\
 
-95% confidence interval = point estimate +- 1.96 * standard error
-x bar (mean) +- 1.96 * standard error
-
-mean = p
-
-SE = sqrt( p(1-p)/n )  - slides 19-20 of chapter 5
-
-or
-
-SE = SD / sqrt(n)
-
-p = point estimate +/- 1.96 * SE
-  = PE +/- ***
 We are 95% confident that [PE + x, PE - x] of all animated group patients, PTSD therapy helped them
 
-```{r}
-qt(0.025, df = 49) # t*49 = 2.01
-
-# mean +- t * SD/sqrt(n)
-# mean +- 2.01 * (SD/sqrt(50))
-```
-
-We always have the null and the alternate hypothesis.
-The null says no, the experiment didn't make any difference.
-Give them animated models - didn't make any difference.
-Male or Female, didn't make any difference.
-Null = no effect
-
-Alternate - something has happened here that is statistically significant
-Though the probability of seeing a difference between pre and post is actually very low
 p-value and t test
 when p-value is below 0.05 - what you're saying is: I got a sample mean before of x, I got a sample mean of afterwards of x+2
 difference is 2 (2/10 e.g.)
 p-value below 0.05 means there's only a 5% that the null hypothesis can still be true given that you see these results
 5% probability that the null hypothesis is true given that we are seeing the difference in values (of means)
-if p-value is so low, and you're seeing the difference in values, and the null hypothesis is true, that's encouraging you to reject the null hypothesis - i.e. < 5% is the probability that the differences in means exist and that the null hypothesis is true
-therefore p-value of <0.05 means reject the null hypothesis i.e something is indeed happening
+if p-value is so low, and you're seeing the difference in values, that's encouraging you to reject the null hypothesis - i.e. < 5% is the probability that the differences in means exist and that the null hypothesis is true
+therefore p-value of < 0.05 means reject the null hypothesis i.e something is indeed happening
 
-For the CA we have to state what we think is the null (no effect) hypothesis and what the alternate hypothesis is
-
-If it is quite unlikely to obtain results as in the actual data, we should decide to reject the null hypothesis in favour of the alternative
-
-1. start with a null hypothesis (H0) (that represents no effect/the status quo)
-2. state the alternative hypothesis (Ha) (the represents our research question)
-3. Conduct a hypothesis test under the assumption that the null hypothesis is true, using p-value test which tells us the probability that this has occurred by accident is very low is p-value is < 0.05 i.e. reject null hypothesis - alternative hypothesis is true
-so again p-value <0.05 means that there's only a 5% chance that we would be observing the difference between before and after means if the null hypothesis was true. So because the probability is really low, we have to reject the null hypothesis meaning its not true
 
 If the test results suggest that the data do not provide convincing evidence for the alternative hypothesis, we must stick with the null hypothesis. i.e. if p-value is >= 0.05, null hypothesis is true
-
-- one null and one alternative hypothesis
-- descriptive statistics - plots
-- test for normality
-- an abstract
-- some conclusions, based on p-value reject or accepting null hypothesis
-
-e.g.
-mean before is 0.6
-mean after is 0.7
-the difference between the two means should not be zero, therefore there must be some effect
-so that could be our alternate hypothesis
-null is that no effect happened
-
-only use student t test
-
-
-
-*7. Determine the degree of correlation between any explanatory and response variable of your choice.*\
 
 ---
 
@@ -437,6 +412,8 @@ only use student t test
 *5. Analyse the data to provide the hypothesis testing conclusion.*\
 
 ## Outline findings and relation to the hypothesis
+*then lastly, is there a correlation between something that we put in and something that we get out, are there correlations between 2 variables*
+
 
 81% of patients experienced improvement in their PTSD symptoms after VR treatment and overall, all test groups experienced an improvement of 13.3% median improvement (-0.72 points between pre and post ratings) which supports the alternative hypothesis that both animated VR therapy reduces PTSD.
 
@@ -444,7 +421,7 @@ VR groups reduced PTSD scores by 15.01%, this equals to 3.8% more than the contr
 
 VR impact median reduced by 15.01%. Pre score median was 6.16 with a range of 2.06. Post score median was 5.43 with a range of 5.22.
 
-No notable difference between VR groups was experienced (animated versus static) with a 0.49% variance in impact (between pre and post scores)
+No notable difference between VR groups was experienced (animated) with a 0.49% variance in impact (between pre and post scores)
 
 Control impact median reduced by -11.25%. Pre score median was 5.98 with a range of 4.75. Post score median was 5.31 with a range of 5.44
 
@@ -470,6 +447,12 @@ for a variable of your choice.
 
 7. Determine the degree of correlation between any explanatory and response variable
 of your choice.
+
+
+
+
+
+
 
 ## Limitations (if confounding variables are clearly identified by your group)
 
