@@ -5,13 +5,13 @@
 ##### Pair Project Dec 2022: Gareth Burger &amp; James Bunt
 
 #### Repository
-R source code: https://github.com/jbunt85/2022_DAIE_GCA_GB_JB
+R source code: https://github.com/gcburger/2022_DAIE_GCA_GB_JB
 
 #### Report
 For your convenience and to account for any file formatting issues, please find different versions of the report below:
 
-PDF (R Studio): https://github.com/jbunt85/2022_DAIE_GCA_GB_JB/blob/main/output_reports/Report_Jungian_Sandplay_Analysis.pdf
+PDF (R Studio): https://github.com/gcburger/2022_DAIE_GCA_GB_JB/blob/main/output_reports/Report_Jungian_Sandplay_Analysis.pdf
 
-HTML (R Studio): https://github.com/jbunt85/2022_DAIE_GCA_GB_JB/blob/main/output_reports/Report_Jungian_Sandplay_Analysis.html
+HTML (R Studio): https://github.com/gcburger/2022_DAIE_GCA_GB_JB/blob/main/output_reports/Report_Jungian_Sandplay_Analysis.html
 
-PDF (HTML (R Studio) outputted to 'Print to PDF'): https://github.com/jbunt85/2022_DAIE_GCA_GB_JB/blob/main/output_reports/Report_Jungian_Sandplay_Analysis_html.pdf
+PDF (HTML (R Studio) outputted to 'Print to PDF'): https://github.com/gcburger/2022_DAIE_GCA_GB_JB/blob/main/output_reports/Report_Jungian_Sandplay_Analysis_html.pdf
